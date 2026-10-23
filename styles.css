@@ -67,3 +67,10 @@
 
 /* Grouped project credit sections */
 html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-layout{display:grid;grid-template-columns:minmax(180px,310px) 1fr;gap:48px;align-items:center;margin-top:22px}.credit-art{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--panel)}.credit-art img{display:block;width:100%;height:auto}.credit-copy h2{margin-top:0}.credit-section:target{background:linear-gradient(90deg,#d9b98b0e,transparent 75%)}.credit-section:target .credit-copy h2{color:var(--gold)}.project-jump{display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--border);padding:20px 0 32px;margin-top:-40px}.project-jump span{font-size:12px;color:var(--muted);margin-right:8px}.project-jump a{font-size:12px;border:1px solid var(--border);padding:9px 12px;border-radius:7px}.project-jump a:hover{border-color:var(--gold);color:var(--gold)}@media(max-width:650px){.credit-layout{grid-template-columns:1fr;gap:20px}.credit-art{max-width:290px}.project-jump{margin-top:-25px}}
+
+/* Fix: give DLC thumbnail previews their own footer, never cover title artwork. */
+.feature-composition{display:flex;flex-direction:column;aspect-ratio:3/4;overflow:hidden}
+.feature-composition .feature-main{height:auto;flex:1 1 auto;min-height:0}
+.feature-composition .feature-expansions.overlay-expansions{position:relative;left:auto;bottom:auto;z-index:5;flex:0 0 92px;align-items:center;justify-content:flex-start;padding:8px 12px!important;min-height:92px!important;width:100%;max-width:none;background:#10151d!important;border-top:1px solid #ffffff1a}
+.feature-composition .expansion-art{height:72px;width:94px}
+@media(max-width:590px){.feature-composition .feature-expansions.overlay-expansions{padding:6px 8px!important;min-height:74px!important;flex-basis:74px}.feature-composition .expansion-art{width:72px;height:58px}}
