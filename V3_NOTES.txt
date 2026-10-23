@@ -1,1 +1,6 @@
-V3 preview: improved featured card layouts, 9px rounded corners, compact earlier credits. Seven locally generated editorial placeholders are NOT official game cover artwork. Existing external Steam cover URLs remain for the other titles. No new DLC art is packaged yet. Please review before publishing.
+Portfolio V3 artwork update, October 23 2026
+- User-provided Far Cry Instincts and Star Wars: Uprising images embedded locally.
+- User-provided Splinter Cell: Double Agent cover embedded locally; this is the original small-resolution image, not the unverified LaunchBox high-resolution variant.
+- Removed duplicate overlay titles on BioShock 2 and Tomb Raider cards.
+- Featured cover artwork now uses contain fitting to avoid cropping BioShock 2 and Weird West logos.
+- Keep existing live website unchanged until preview approved.
