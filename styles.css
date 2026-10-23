@@ -14,3 +14,22 @@
 .splitcover.three .slice span{font-size:clamp(11px,1.2vw,16px);left:9px;right:6px}
 .early-heading{margin:54px 0 18px}.early-heading h2{font-size:26px}.early{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.early .cover{aspect-ratio:4/3}.early .game h3{font-size:13px;margin:9px 0 2px}.early .game p{font-size:10px}.early .fallback{font-size:clamp(13px,1.5vw,18px)}
 @media(max-width:760px){.early{grid-template-columns:repeat(2,minmax(0,1fr))}.splitcover .slice span{font-size:15px}}
+
+/* V3: rounded, cinematic and accessible */
+:root{--radius:9px}
+.cover,.shot,.gallery-note,.clip,.btn,.feature-composition,.feature-main,.expansion-pill{border-radius:var(--radius)}
+.cover,.feature-composition{box-shadow:0 10px 32px #0000001c}
+.cover{transition:border-color .2s,transform .2s}
+.game:hover .cover{border-color:#9c876b;transform:translateY(-2px)}
+.feature-composition{position:relative;overflow:hidden;border:1px solid var(--border);background:#151c23;aspect-ratio:3/4;display:flex;flex-direction:column}
+.feature-main{position:relative;flex:1;min-height:0;overflow:hidden;display:block;border-radius:0}
+.feature-main img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 28%;filter:saturate(.84);transition:transform .3s}
+.feature-main:after{content:'';position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#0b101be6);pointer-events:none}
+.feature-main-label{position:absolute;bottom:20px;left:20px;right:15px;z-index:2;font:800 clamp(17px,2vw,25px)/1.18 Manrope,sans-serif;text-shadow:0 2px 8px #000}
+.feature-expansions{display:flex;flex-wrap:wrap;gap:7px;padding:11px;background:#10151d;min-height:57px;align-items:center}
+.expansion-pill{border:1px solid #55535a;background:#24252b;color:#f5eee5;padding:10px 12px;font-size:11px;font-weight:700;flex:1;text-align:center;white-space:nowrap;transition:background .2s}
+.expansion-pill:hover{background:#494038}
+.early{gap:13px}.early .cover{aspect-ratio:16/10}.early .fallback{font-size:15px}
+.early .cover img{object-fit:cover;object-position:center 65%}
+.early .game h3{font-size:12px}
+@media(max-width:590px){.feature-expansions{padding:7px;gap:5px}.expansion-pill{white-space:normal;font-size:10px;padding:8px 4px}.feature-main-label{font-size:16px;left:12px}.early .cover{aspect-ratio:4/3}}

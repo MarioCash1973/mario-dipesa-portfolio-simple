@@ -1,0 +1,1 @@
+V3 preview: improved featured card layouts, 9px rounded corners, compact earlier credits. Seven locally generated editorial placeholders are NOT official game cover artwork. Existing external Steam cover URLs remain for the other titles. No new DLC art is packaged yet. Please review before publishing.
