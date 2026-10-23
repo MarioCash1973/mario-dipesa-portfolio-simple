@@ -42,3 +42,28 @@
 .featured-cover:after{display:none}
 .feature-main-label{display:none}
 .featured .cover .view{bottom:13px}
+
+/* Minerva's Den interactive artwork preview */
+.feature-main img.feature-primary-image{transition:opacity .18s ease;object-fit:contain}
+.feature-expansions:has(.expansion-art){padding:8px;min-height:70px}
+.expansion-art{display:block;width:100%;height:58px;border:1px solid #59616d;border-radius:8px;overflow:hidden;background:#10151d;transition:border-color .2s,box-shadow .2s;cursor:pointer}
+.expansion-art img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;background:#111a22;transition:transform .25s}
+.expansion-art:hover,.expansion-art:focus-visible{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.expansion-art:hover img{transform:scale(1.025)}
+@media (hover:none){.expansion-art{height:65px}}
+
+/* V3 inset thumbnail: compact, floating over main artwork */
+.feature-composition{display:block;aspect-ratio:3/4;position:relative;overflow:hidden}
+.feature-main{display:block;width:100%;height:100%;position:relative}
+.feature-main img.feature-primary-image{width:100%;height:100%;object-fit:contain;object-position:center;display:block;transition:opacity .16s ease;transform:none!important}
+.feature-composition .feature-expansions.overlay-expansions{position:absolute;left:13px;bottom:13px;z-index:5;display:flex;align-items:flex-end;gap:8px;padding:0!important;min-height:0!important;background:transparent!important;width:auto;max-width:calc(100% - 26px)}
+.feature-composition .expansion-art{display:block;width:104px;height:83px;max-width:100%;border:1px solid #9ba6b2a8;border-radius:8px;background:#10151d;box-shadow:0 5px 18px #000b;overflow:hidden;flex:none}
+.feature-composition .expansion-art img{width:100%;height:100%;object-fit:cover;object-position:center;background:transparent;transform:none}
+.feature-composition .expansion-art:hover,.feature-composition .expansion-art:focus-visible{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 7px 18px #000a}
+@media(max-width:590px){.feature-composition .expansion-art{width:72px;height:58px}.feature-composition .feature-expansions.overlay-expansions{left:8px;bottom:8px}}
+
+/* Dedicated expansion project pages */
+.dlc-project{display:grid;grid-template-columns:minmax(240px,390px) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center;padding:24px 0 55px}.dlc-project-art{border:1px solid var(--border);border-radius:9px;overflow:hidden;background:#14191f;box-shadow:0 12px 38px #0004}.dlc-project-art img{width:100%;height:auto;display:block}.dlc-project-copy h1{margin:16px 0}.dlc-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.dlc-secondary{background:transparent;border:1px solid var(--border)}@media(max-width:720px){.dlc-project{grid-template-columns:1fr}.dlc-project-art{max-width:420px}}
+
+/* Grouped project credit sections */
+html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-layout{display:grid;grid-template-columns:minmax(180px,310px) 1fr;gap:48px;align-items:center;margin-top:22px}.credit-art{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--panel)}.credit-art img{display:block;width:100%;height:auto}.credit-copy h2{margin-top:0}.credit-section:target{background:linear-gradient(90deg,#d9b98b0e,transparent 75%)}.credit-section:target .credit-copy h2{color:var(--gold)}.project-jump{display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--border);padding:20px 0 32px;margin-top:-40px}.project-jump span{font-size:12px;color:var(--muted);margin-right:8px}.project-jump a{font-size:12px;border:1px solid var(--border);padding:9px 12px;border-radius:7px}.project-jump a:hover{border-color:var(--gold);color:var(--gold)}@media(max-width:650px){.credit-layout{grid-template-columns:1fr;gap:20px}.credit-art{max-width:290px}.project-jump{margin-top:-25px}}

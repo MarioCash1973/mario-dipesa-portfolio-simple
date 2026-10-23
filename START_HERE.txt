@@ -1,0 +1,1 @@
+Extract the complete ZIP. Open index.html to test the full site, including navigation to the BioShock 2 and Tomb Raider credit sections. OPEN_THIS_portfolio_preview.html is a self-contained homepage preview; for working project-page links, open index.html from the extracted folder.
