@@ -657,3 +657,8 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 .project-hero.bioshock-hero::before{background-image:url("assets/bioshock-project-hero.jpg");background-position:center 50%;background-size:cover}
 .project-hero.bioshock-hero::after{background:linear-gradient(90deg,rgba(12,15,19,1) 0%,rgba(12,15,19,.97) 24%,rgba(12,15,19,.82) 43%,rgba(12,15,19,.42) 70%,rgba(12,15,19,.12) 100%),linear-gradient(0deg,#0e1116 0%,transparent 35%)}
 @media(max-width:650px){.project-hero.bioshock-hero::before{background-position:59% center}.project-hero.bioshock-hero::after{background:linear-gradient(90deg,#0e1116ed,#0e1116aa),linear-gradient(0deg,#0e1116,transparent 70%)}}
+
+/* Weird West cinematic hero, matching the BioShock and Tomb Raider layout. */
+.project-hero.weird-west-hero::before{background-image:url("assets/weirdwest_gunshop.jpg");background-position:center 48%;background-size:cover}
+.project-hero.weird-west-hero::after{background:linear-gradient(90deg,rgba(12,15,19,1) 0%,rgba(12,15,19,.97) 24%,rgba(12,15,19,.82) 43%,rgba(12,15,19,.42) 70%,rgba(12,15,19,.12) 100%),linear-gradient(0deg,#0e1116 0%,transparent 35%)}
+@media(max-width:650px){.project-hero.weird-west-hero::before{background-position:60% center}.project-hero.weird-west-hero::after{background:linear-gradient(90deg,#0e1116ed,#0e1116aa),linear-gradient(0deg,#0e1116,transparent 70%)}}
