@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 :root{--bg:#0e1116;--panel:#171c23;--text:#f2f1ed;--muted:#9ba6b2;--gold:#d9b98b;--border:#2a3039}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',Arial,sans-serif}a{color:inherit;text-decoration:none}button{font:inherit}a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:4px}.container{width:min(1200px,calc(100% - 52px));margin:auto}header{border-bottom:1px solid var(--border);background:#0e1116ef;position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)}header .container{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:15px}.brand{font-weight:800;letter-spacing:-.05em;font-family:Manrope,sans-serif;font-size:20px}.brand span{color:var(--gold)}nav{display:flex;gap:25px}nav a{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#d3d5d7}nav a:hover,.back:hover{color:var(--gold)}.hero{padding:88px 0 76px;border-bottom:1px solid var(--border)}.eyebrow{color:var(--gold);font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase}h1,h2,h3{font-family:Manrope,sans-serif}h1{font-size:clamp(43px,6.8vw,86px);letter-spacing:-.065em;line-height:1.1;margin:18px 0 22px;max-width:920px}h1 span{color:var(--gold)}.intro{font-size:18px;line-height:1.8;color:#c3c9ce;max-width:760px}.buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:27px}.btn{border:1px solid var(--gold);background:var(--gold);padding:13px 20px;color:#171717;font-weight:700;font-size:12px;letter-spacing:.04em}.btn.alt{background:transparent;color:var(--text);border-color:#515964}.section{padding:72px 0}.section+.section{border-top:1px solid var(--border)}.section-heading{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:27px}.section h2{font-size:clamp(27px,3.8vw,42px);letter-spacing:-.045em;margin:8px 0}.hint{font-size:13px;color:var(--muted)}.grid{display:grid;gap:22px}.featured{grid-template-columns:repeat(3,minmax(0,1fr))}.more{grid-template-columns:repeat(4,minmax(0,1fr))}.game{min-width:0}.cover{display:block;position:relative;overflow:hidden;background:linear-gradient(135deg,#263445,#171a20);border:1px solid var(--border);aspect-ratio:3/4}.cover img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .3s ease}.game:hover img{transform:scale(1.035)}.cover:after{content:'';position:absolute;inset:auto 0 0;height:22%;background:linear-gradient(transparent,#0e111688);pointer-events:none}.fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:28px;text-align:center;color:#e2dfd7;font-size:clamp(19px,2.3vw,31px);font-weight:800;letter-spacing:-.05em;background:radial-gradient(ellipse at 35% 30%,#3c4d5b,#151b24 65%)}.cover img{position:relative;z-index:1}.cover img[hidden]{display:none}.cover .view{position:absolute;z-index:3;right:13px;bottom:13px;border:1px solid #ffffff70;background:#12151bbd;padding:7px 11px;font-size:11px}.game h3{font-size:18px;letter-spacing:-.03em;margin:15px 0 4px}.game p{color:var(--muted);font-size:12px;margin:0;line-height:1.5}.more .game h3{font-size:15px}.more .game p{font-size:11px}.about{display:grid;grid-template-columns:1fr 1fr;gap:60px}.about p,.detail-intro{line-height:1.85;color:#c4cad0}.footer{border-top:1px solid var(--border);padding:30px 0;color:var(--muted);font-size:12px}.footer .container{display:flex;justify-content:space-between;gap:12px}.back{display:inline-block;color:var(--muted);font-size:13px;margin:36px 0}.project-header{display:grid;grid-template-columns:minmax(210px,310px) 1fr;gap:60px;align-items:center;margin-bottom:70px}.project-header .cover{width:100%}.project-header h1{font-size:clamp(36px,5vw,64px)}.project-header .meta{color:var(--gold);font-size:13px;font-weight:700}.project-header .detail-intro{font-size:17px}.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.shot{padding:0;border:1px solid var(--border);background:var(--panel);cursor:zoom-in;overflow:hidden;aspect-ratio:16/10}.shot img{width:100%;height:100%;object-fit:cover;display:block}.shot:hover img{transform:scale(1.025)}.gallery-note{padding:30px;border:1px solid var(--border);background:var(--panel);color:var(--muted);line-height:1.7}.lightbox{border:0;padding:0;max-width:94vw;max-height:95vh;background:#0a0d11;color:white}.lightbox::backdrop{background:#000e}.lightbox img{max-width:90vw;max-height:82vh;object-fit:contain;display:block}.lightbox-controls{display:flex;align-items:center;justify-content:space-between;padding:10px;gap:15px}.lightbox-controls button{border:1px solid #525a62;background:#181d23;color:white;padding:7px 13px;cursor:pointer}.clip-list{display:grid;gap:14px}.clip{padding:20px;border:1px solid var(--border);background:var(--panel)}.clip strong{display:block}.clip span{color:var(--muted);font-size:13px}.muted{color:var(--muted)}@media(max-width:850px){.featured{grid-template-columns:repeat(2,minmax(0,1fr))}.more{grid-template-columns:repeat(3,minmax(0,1fr))}.project-header{gap:30px}.about{grid-template-columns:1fr;gap:10px}}@media(max-width:590px){.container{width:calc(100% - 34px)}header .container{flex-direction:column;align-items:flex-start}nav{gap:17px}.hero{padding:55px 0}.section{padding:49px 0}.featured,.more{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.project-header{grid-template-columns:1fr;gap:25px}.project-header .cover{max-width:230px}.game h3{font-size:15px}.section-heading{align-items:start;flex-direction:column}.footer .container{flex-direction:column}}
 /* v2 featured split artwork */
@@ -69,7 +70,6 @@
 html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-layout{display:grid;grid-template-columns:minmax(180px,310px) 1fr;gap:48px;align-items:center;margin-top:22px}.credit-art{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--panel)}.credit-art img{display:block;width:100%;height:auto}.credit-copy h2{margin-top:0}.credit-section:target{background:linear-gradient(90deg,#d9b98b0e,transparent 75%)}.credit-section:target .credit-copy h2{color:var(--gold)}.project-jump{display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--border);padding:20px 0 32px;margin-top:-40px}.project-jump span{font-size:12px;color:var(--muted);margin-right:8px}.project-jump a{font-size:12px;border:1px solid var(--border);padding:9px 12px;border-radius:7px}.project-jump a:hover{border-color:var(--gold);color:var(--gold)}@media(max-width:650px){.credit-layout{grid-template-columns:1fr;gap:20px}.credit-art{max-width:290px}.project-jump{margin-top:-25px}}
 
 /* Featured work refinement, Oct 2026 */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 #work .section-heading h2{
   font-family:'Space Grotesk',Manrope,sans-serif;
   font-weight:700;letter-spacing:-.065em;
@@ -128,18 +128,11 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
   }
 }
 
-/* Weird West: show the full cover and title without empty sidebars. */
-#work .featured a.game[href="weird-west.html"] .featured-cover {
-  position:relative;overflow:hidden;isolation:isolate;
-}
-#work .featured a.game[href="weird-west.html"] .featured-cover::before {
-  content:"";position:absolute;inset:-14px;z-index:-1;
-  background:url("https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1097350/library_600x900.jpg") center/cover no-repeat;
-  filter:blur(14px) brightness(.58);
-}
+/* The 2:3 poster fills the 3:4 card; anchor at the top to preserve its logo.
+   Keep the shared card dimensions and image hover transform. */
 #work .featured a.game[href="weird-west.html"] .featured-cover img {
-  object-fit:contain!important;object-position:center center!important;
-  position:relative;z-index:1;background:transparent!important;
+  object-fit:cover!important;
+  object-position:center top!important;
 }
 
 /* Tomb Raider DLC previews: opposite bottom corners, with clear pointer travel space. */
@@ -164,3 +157,444 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 #work .featured .feature-composition:has(a[href="tomb-raider.html#beneath-the-ashes"]) .expansion-art {
   max-width:calc((100% - 24px)/2);
 }
+
+
+/* Featured artwork: stable framing and gold hover outline (Oct 24 review). */
+/* Stop all poster movement, including the legacy generic .game:hover img rule. */
+#work .featured .game:hover .feature-main img.feature-primary-image,
+#work .featured .game:hover .featured-cover img,
+#work .featured .feature-main img.feature-primary-image,
+#work .featured .featured-cover img {
+  transform:none !important;
+  transition:opacity .18s ease !important;
+  will-change:auto;
+}
+/* Show the full upper edge of the BioShock cover and protect its masthead. */
+#work .featured .game:first-child .feature-main img.feature-primary-image {
+  object-position:center top !important;
+}
+/* Gold inset border only when hovering/focusing the main artwork itself.
+   It does not interfere with the DLC thumbnail hover/preview behavior. */
+#work .featured .feature-composition::after,
+#work .featured .featured-cover::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  border:2px solid transparent;
+  border-radius:inherit;
+  pointer-events:none;
+  z-index:4;
+  transition:border-color .18s ease, box-shadow .18s ease;
+}
+#work .featured .feature-composition:has(> .feature-main:hover)::after,
+#work .featured .feature-composition:has(> .feature-main:focus-visible)::after,
+#work .featured .feature-composition:has(.expansion-art:hover)::after,
+#work .featured .feature-composition:has(.expansion-art:focus-visible)::after,
+#work .featured .featured-cover:hover::before,
+#work .featured a.game:focus-visible .featured-cover::before {
+  border-color:var(--gold);
+  box-shadow:inset 0 0 0 1px #d9b98b55;
+}
+/* Remove the old lift on the standalone Weird West card. */
+#work .featured .game:hover .cover {transform:none;}
+@media (prefers-reduced-motion:reduce) {
+  #work .featured .feature-composition::after,
+  #work .featured .featured-cover::before {transition:none;}
+}
+
+/* Additional credits: stable posters, matching gold hover frames, centered last row. */
+#credits .more {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:22px;
+}
+#credits .more > .game {
+  flex:0 0 calc((100% - 66px)/4);
+  min-width:0;
+}
+#credits .more .game:hover .cover {
+  transform:none;
+  border-color:var(--border);
+}
+#credits .more .game:hover .cover img {
+  transform:none !important;
+}
+#credits .more .cover::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  border:2px solid transparent;
+  border-radius:inherit;
+  z-index:4;
+  pointer-events:none;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+#credits .more .game:hover .cover::before,
+#credits .more .game:focus-visible .cover::before {
+  border-color:var(--gold);
+  box-shadow:inset 0 0 0 1px #d9b98b55;
+}
+@media(max-width:850px){
+  #credits .more > .game {flex-basis:calc((100% - 44px)/3);}
+}
+@media(max-width:590px){
+  #credits .more {gap:14px;}
+  #credits .more > .game {flex-basis:calc((100% - 14px)/2);}
+}
+@media(prefers-reduced-motion:reduce){
+  #credits .more .cover::before {transition:none;}
+}
+
+/* Additional credits: preserve full Battlefront II masthead without resizing card. */
+#credits .more > .game[href="battlefront.html"] .cover img {
+  object-position:center top;
+  object-fit:cover;
+}
+/* No project CTA badges; entire poster remains clickable. */
+#credits .more .cover .view {display:none;}
+
+/* Earlier credits: crop original artwork into fixed 4:3 frames, matching Additional credits. */
+#credits .early .cover {aspect-ratio:4/3;}
+#credits .early .cover img {object-fit:cover;object-position:center top;}
+/* Preserve the left-hand Tonic Trouble logo; crop the platform branding on the right. */
+#credits .early .game[href="tonic.html"] .cover img {object-position:left top;}
+#credits .early .game:hover .cover {transform:none;border-color:var(--border);}
+#credits .early .game:hover .cover img {transform:none !important;}
+#credits .early .cover::before {
+  content:"";position:absolute;inset:0;
+  border:2px solid transparent;border-radius:inherit;
+  z-index:4;pointer-events:none;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+#credits .early .game:hover .cover::before,
+#credits .early .game:focus-visible .cover::before {
+  border-color:var(--gold);box-shadow:inset 0 0 0 1px #d9b98b55;
+}
+@media(prefers-reduced-motion:reduce){
+  #credits .early .cover::before {transition:none;}
+}
+
+/* Review: concise hero and understated contact action. */
+.hero h1 {
+  font-family:'Space Grotesk',Manrope,sans-serif;
+  font-weight:700;
+  max-width:1200px;
+  line-height:1.07;
+}
+.hero .intro {max-width:920px;}
+.hero-contact-link {
+  display:inline-block;
+  margin-top:24px;
+  color:var(--gold);
+  font-size:14px;
+  font-weight:700;
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+  padding-bottom:4px;
+  transition:border-color .18s ease;
+}
+.hero-contact-link:hover,
+.hero-contact-link:focus-visible {border-bottom-color:var(--gold);}
+
+/* Keep the two understated hero links clearly separated. */
+.hero-links {display:flex;align-items:center;flex-wrap:wrap;gap:24px;}
+
+/* About: section heading consistent with Featured work, expressive gold tagline. */
+#about .about-heading {
+  font-family:'Space Grotesk',Manrope,sans-serif;
+  font-size:clamp(31px,3.8vw,48px);
+  font-weight:700;
+  color:var(--text);
+  line-height:1.12;
+  letter-spacing:-.045em;
+  margin:0 0 24px;
+}
+#about .about-tagline {
+  font-family:'DM Serif Display',Georgia,serif;
+  font-style:italic;
+  font-size:clamp(30px,3.4vw,49px);
+  font-weight:400;
+  line-height:1.2;
+  letter-spacing:-.018em;
+  color:var(--gold);
+  margin:0;
+}
+#about .about > div:last-child p:first-child {margin-top:0;}
+@media(max-width:850px){
+  #about .about-tagline {margin-bottom:16px;}
+}
+
+/* Editorial Bodoni-style About tagline, slightly more restrained in size. */
+#about .about-tagline {font-family:'Bodoni Moda',Didot,'Times New Roman',serif;font-style:italic;font-size:clamp(27px,3vw,43px);font-weight:400;line-height:1.22;}
+
+/* Editorial cinematic experiment: atmospheric light and deliberate hierarchy. */
+.hero {
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 55% 75% at 69% 23%,rgba(180,119,60,.115),transparent 74%),
+    radial-gradient(ellipse 52% 100% at 3% 88%,rgba(94,72,55,.09),transparent 78%),
+    #0e1116;
+}
+.hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(112deg,transparent 43%,rgba(217,185,139,.028) 57%,transparent 73%);
+}
+.hero .container {position:relative;}
+.hero .eyebrow {
+  display:flex;
+  align-items:center;
+  gap:16px;
+  color:#e2c49b;
+  letter-spacing:.17em;
+}
+.hero .eyebrow::before {
+  content:"";
+  display:block;
+  flex:0 0 28px;
+  height:1px;
+  background:var(--gold);
+}
+.hero h1 {text-wrap:balance;text-shadow:0 6px 36px rgba(0,0,0,.13);}
+.hero h1 span {color:#e5bd89;}
+.hero .intro {color:#d0d0ce;}
+.hero-links .hero-contact-link {transition:color .2s ease,border-color .2s ease;}
+.hero-links .hero-contact-link:hover {color:#f1d2a6;}
+/* Section titles echo the hero, while the artwork remains the focal point. */
+#work .section-heading h2,
+#credits > .container > h2 {
+  position:relative;
+  padding-bottom:16px;
+}
+#work .section-heading h2::after,
+#credits > .container > h2::after {
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:44px;
+  height:2px;
+  background:var(--gold);
+  opacity:.8;
+}
+#work .featured .game h3,
+#credits .more .game h3 {letter-spacing:-.025em;}
+#about {background:linear-gradient(145deg,rgba(217,185,139,.028),transparent 47%);}
+#about .about-tagline {color:#e0b883;}
+@media(max-width:590px) {
+  .hero {background:radial-gradient(ellipse 100% 70% at 90% 14%,rgba(180,119,60,.10),transparent 80%),#0e1116;}
+  .hero .eyebrow {gap:9px;}
+  .hero .eyebrow::before {flex-basis:15px;}
+}
+
+/* Editorial cinematic v2: a visibly different, still restrained art direction. */
+.hero {
+  padding:112px 0 108px;
+  background:
+    radial-gradient(ellipse 62% 105% at 100% 46%,rgba(177,113,56,.30),transparent 74%),
+    linear-gradient(115deg,#0e1116 8%,#17181a 58%,#282019 100%);
+  border-bottom:1px solid rgba(217,185,139,.35);
+}
+.hero::before {
+  background:linear-gradient(90deg,transparent 0%,transparent 69%,rgba(217,185,139,.10) 69.1%,transparent 69.25%);
+}
+.hero .container::after {
+  content:"";
+  position:absolute;
+  width:clamp(120px,19vw,270px);
+  height:clamp(120px,19vw,270px);
+  right:-3%;
+  top:1%;
+  border:1px solid rgba(217,185,139,.19);
+  border-radius:50%;
+  box-shadow:0 0 0 28px rgba(217,185,139,.035),0 0 0 58px rgba(217,185,139,.025);
+  pointer-events:none;
+  z-index:-1;
+}
+.hero h1 {position:relative;z-index:1;max-width:1150px;}
+.hero h1 span {
+  font-family:'Bodoni Moda',Didot,Georgia,serif;
+  font-style:italic;
+  font-weight:400;
+  letter-spacing:-.075em;
+  color:#e4b47d;
+}
+.hero .intro {
+  border-left:2px solid rgba(217,185,139,.85);
+  padding-left:22px;
+  max-width:770px;
+  font-size:19px;
+  line-height:1.75;
+}
+.hero-links {padding-left:24px;}
+#work {padding-top:90px;}
+#work .section-heading h2,
+#credits > .container > h2 {
+  font-size:clamp(34px,4.2vw,54px);
+  padding-bottom:20px;
+}
+#work .section-heading h2::after,
+#credits > .container > h2::after {width:86px;height:3px;}
+#work .featured {gap:28px;}
+#work .featured .game h3 {font-size:21px;}
+#about {background:linear-gradient(125deg,rgba(184,118,65,.10),transparent 52%);}
+#about .about-tagline {font-size:clamp(32px,3.6vw,50px);}
+@media(max-width:850px) {
+  .hero {padding:80px 0 82px;}
+  .hero .container::after {opacity:.45;}
+}
+@media(max-width:590px) {
+  .hero {padding:65px 0 70px;background:radial-gradient(ellipse 95% 75% at 95% 5%,rgba(177,113,56,.24),transparent 80%),#0e1116;}
+  .hero .container::after {display:none;}
+  .hero .intro {font-size:17px;padding-left:15px;}
+  .hero-links {padding-left:17px;}
+  #work {padding-top:60px;}
+  #work .featured {gap:14px;}
+  #work .featured .game h3 {font-size:16px;}
+}
+
+/* BioShock 2 checkpoint hero: replace decorative circle with real project imagery. */
+.hero {
+  background:#101318;
+  isolation:isolate;
+}
+.hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,#101318 0%,rgba(16,19,24,.97) 27%,rgba(16,19,24,.78) 48%,rgba(16,19,24,.34) 74%,rgba(16,19,24,.24) 100%),
+    linear-gradient(0deg,rgba(16,19,24,.62),transparent 35%,rgba(16,19,24,.28)),
+    url('assets/checkpoint-a.webp') right 44% / 64% auto no-repeat;
+  opacity:1;
+}
+.hero .container::after {display:none;}
+.hero .container {z-index:1;}
+.hero h1 {text-shadow:0 3px 25px rgba(0,0,0,.4);}
+@media(max-width:850px){
+  .hero::before {
+    background:
+      linear-gradient(90deg,#101318 0%,rgba(16,19,24,.94) 35%,rgba(16,19,24,.58) 100%),
+      linear-gradient(0deg,#101318,transparent 75%),
+      url('assets/checkpoint-a.webp') right center / cover no-repeat;
+  }
+}
+@media(max-width:590px){
+  .hero::before {
+    background:
+      linear-gradient(90deg,rgba(16,19,24,.92),rgba(16,19,24,.72)),
+      linear-gradient(0deg,#101318,transparent 70%),
+      url('assets/checkpoint-a.webp') 62% center / cover no-repeat;
+  }
+}
+
+/* Featured Work editorial study: numbered, curated case-study presentation. */
+#work .featured {counter-reset:featured-project;}
+#work .featured > .game {
+  counter-increment:featured-project;
+  position:relative;
+  padding-top:34px;
+}
+#work .featured > .game::before {
+  content:"SELECTED PROJECT  /  0" counter(featured-project);
+  position:absolute;
+  top:0;
+  left:0;
+  font-family:'Space Grotesk',Manrope,sans-serif;
+  font-size:10px;
+  letter-spacing:.17em;
+  font-weight:700;
+  color:var(--gold);
+}
+#work .featured > .game::after {
+  content:"";
+  position:absolute;
+  top:6px;
+  right:0;
+  width:22%;
+  height:1px;
+  background:rgba(217,185,139,.44);
+}
+#work .featured .game h3 {
+  margin-top:19px;
+  padding-top:16px;
+  border-top:1px solid rgba(217,185,139,.30);
+  font-size:clamp(17px,1.7vw,22px);
+  line-height:1.3;
+}
+#work .featured .game p {
+  font-size:13px;
+  line-height:1.6;
+  color:#b9bec4;
+  margin-top:7px;
+}
+#work .featured .featured-year {
+  color:var(--gold);
+  opacity:.85;
+}
+#work .section-heading {margin-bottom:35px;}
+#work .section-heading .hint {
+  max-width:235px;
+  text-align:right;
+  line-height:1.5;
+}
+@media(max-width:850px) {
+  #work .featured > .game {padding-top:29px;}
+  #work .featured .game h3 {font-size:18px;}
+}
+@media(max-width:590px) {
+  #work .featured > .game::before {font-size:8px;letter-spacing:.09em;}
+  #work .featured > .game::after {width:13%;}
+  #work .featured .game h3 {padding-top:12px;margin-top:13px;font-size:15px;}
+  #work .featured .game p {font-size:11px;}
+  #work .section-heading .hint {text-align:left;}
+}
+
+/* Contact links: same understated editorial gold treatment as the hero. */
+#contact .contact-links{display:flex;gap:28px;flex-wrap:wrap;margin-top:27px;align-items:center}
+#contact .contact-links a{font-size:16px;font-weight:700;color:var(--gold);padding-bottom:5px;border-bottom:1px solid rgba(217,185,139,.45);transition:color .18s ease,border-color .18s ease}
+#contact .contact-links a:hover,#contact .contact-links a:focus-visible{color:#f1d2a6;border-bottom-color:currentColor}
+
+/* Five early-career projects: more portrait-friendly framing in one balanced row. */
+#credits .early {
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:17px;
+}
+#credits .early .cover {aspect-ratio:3/4;}
+#credits .early .cover img {object-fit:cover;object-position:center top;}
+#credits .early .game:first-child .cover img {object-fit:cover;object-position:center 20%;}
+#credits .early .game[href="tonic.html"] .cover img {object-position:left top;}
+#credits .early .game h3 {font-size:clamp(13px,1.2vw,16px);line-height:1.3;}
+#credits .early .game p {font-size:12px;}
+@media(max-width:850px){
+  #credits .early {grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+}
+@media(max-width:590px){
+  #credits .early {grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+}
+
+/* Early career poster framing: preserve more of the original cover titles. */
+#credits .early .game:first-child .cover img {
+  object-fit:contain;
+  object-position:center top;
+}
+#credits .early .game[href="tonic.html"] .cover img {
+  object-fit:contain;
+  object-position:center top;
+}
+#credits .early .game:first-child .cover,
+#credits .early .game[href="tonic.html"] .cover {
+  background:#17191d;
+}
+
+/* Square Tonic artwork fills the portrait frame without letterboxing. */
+#credits .early .game[href="tonic.html"] .cover img {object-fit:cover;object-position:center top;}
