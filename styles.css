@@ -598,3 +598,22 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 
 /* Square Tonic artwork fills the portrait frame without letterboxing. */
 #credits .early .game[href="tonic.html"] .cover img {object-fit:cover;object-position:center top;}
+
+/* Project pages / BioShock 2 cinematic opening */
+.project-cinematic-hero{position:relative;isolation:isolate;min-height:620px;display:flex;align-items:end;overflow:hidden;background:#101418;border-bottom:1px solid rgba(217,185,139,.25)}
+.project-cinematic-hero::before{content:"";position:absolute;inset:0;z-index:-2;background:url('assets/bioshock-outer-persephone-hero.jpg') center 46% / cover no-repeat}
+.project-cinematic-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(11,15,18,.91) 0%,rgba(11,15,18,.66) 39%,rgba(11,15,18,.10) 100%),linear-gradient(0deg,#0e1116 0%,rgba(14,17,22,.1) 68%,rgba(14,17,22,.22) 100%)}
+.project-cinematic-hero>.container{padding-top:40px;padding-bottom:76px;position:relative}
+.project-cinematic-hero .back{display:inline-block;margin-bottom:110px;font-size:13px}
+.project-cinematic-copy{max-width:760px}
+.project-cinematic-copy h1{font-size:clamp(64px,9vw,132px);line-height:.95;margin:15px 0 22px}
+.project-cinematic-copy h1 em{font-family:'Bodoni Moda',Georgia,serif;font-weight:400;color:var(--gold)}
+.project-cinematic-copy .meta{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:#e4c69b}
+.project-cinematic-copy p{font-size:19px;line-height:1.65;max-width:620px;color:#e1e4e5;text-shadow:0 2px 15px #101418}
+.project-scroll{display:inline-block;margin-top:16px;color:var(--gold);font-size:13px;font-weight:700}
+.project-story-intro{padding:95px 0 65px}
+.project-story-intro .container{max-width:1200px}
+.project-story-intro h2{font-size:clamp(34px,5vw,65px);letter-spacing:-.055em;line-height:1.13;max-width:900px;margin:15px 0 28px}
+.project-story-intro p{font-size:19px;line-height:1.85;max-width:800px;color:#c6cbd0}
+.project-story-intro .project-jump{margin-top:34px}
+@media(max-width:700px){.project-cinematic-hero{min-height:590px}.project-cinematic-hero::before{background-position:59% center}.project-cinematic-hero::after{background:linear-gradient(90deg,rgba(11,15,18,.84),rgba(11,15,18,.35)),linear-gradient(0deg,#0e1116,transparent 90%)}.project-cinematic-hero .back{margin-bottom:125px}.project-cinematic-hero>.container{padding-bottom:50px}.project-cinematic-copy h1{font-size:clamp(58px,14vw,90px)}.project-cinematic-copy p{font-size:16px}.project-story-intro{padding:65px 0 45px}.project-story-intro p{font-size:17px}}
