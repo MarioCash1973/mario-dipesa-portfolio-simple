@@ -595,3 +595,6 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 #credits .early .game[href="tonic.html"] .cover {
   background:#17191d;
 }
+
+/* Square Tonic artwork fills the portrait frame without letterboxing. */
+#credits .early .game[href="tonic.html"] .cover img {object-fit:cover;object-position:center top;}
