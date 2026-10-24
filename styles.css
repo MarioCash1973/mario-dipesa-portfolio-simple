@@ -274,3 +274,25 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 @media(prefers-reduced-motion:reduce){
   #credits .early .cover::before {transition:none;}
 }
+
+/* Review: concise hero and understated contact action. */
+.hero h1 {
+  font-family:'Space Grotesk',Manrope,sans-serif;
+  font-weight:700;
+  max-width:1200px;
+  line-height:1.07;
+}
+.hero .intro {max-width:920px;}
+.hero-contact-link {
+  display:inline-block;
+  margin-top:24px;
+  color:var(--gold);
+  font-size:14px;
+  font-weight:700;
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+  padding-bottom:4px;
+  transition:border-color .18s ease;
+}
+.hero-contact-link:hover,
+.hero-contact-link:focus-visible {border-bottom-color:var(--gold);}
