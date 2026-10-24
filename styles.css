@@ -299,3 +299,28 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 
 /* Keep the two understated hero links clearly separated. */
 .hero-links {display:flex;align-items:center;flex-wrap:wrap;gap:24px;}
+
+/* About: section heading consistent with Featured work, expressive gold tagline. */
+#about .about-heading {
+  font-family:'Space Grotesk',Manrope,sans-serif;
+  font-size:clamp(31px,3.8vw,48px);
+  font-weight:700;
+  color:var(--text);
+  line-height:1.12;
+  letter-spacing:-.045em;
+  margin:0 0 24px;
+}
+#about .about-tagline {
+  font-family:'DM Serif Display',Georgia,serif;
+  font-style:italic;
+  font-size:clamp(30px,3.4vw,49px);
+  font-weight:400;
+  line-height:1.2;
+  letter-spacing:-.018em;
+  color:var(--gold);
+  margin:0;
+}
+#about .about > div:last-child p:first-child {margin-top:0;}
+@media(max-width:850px){
+  #about .about-tagline {margin-bottom:16px;}
+}
