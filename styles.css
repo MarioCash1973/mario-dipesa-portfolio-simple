@@ -201,3 +201,47 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
   #work .featured .feature-composition::after,
   #work .featured .featured-cover::before {transition:none;}
 }
+
+/* Additional credits: stable posters, matching gold hover frames, centered last row. */
+#credits .more {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:22px;
+}
+#credits .more > .game {
+  flex:0 0 calc((100% - 66px)/4);
+  min-width:0;
+}
+#credits .more .game:hover .cover {
+  transform:none;
+  border-color:var(--border);
+}
+#credits .more .game:hover .cover img {
+  transform:none !important;
+}
+#credits .more .cover::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  border:2px solid transparent;
+  border-radius:inherit;
+  z-index:4;
+  pointer-events:none;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+#credits .more .game:hover .cover::before,
+#credits .more .game:focus-visible .cover::before {
+  border-color:var(--gold);
+  box-shadow:inset 0 0 0 1px #d9b98b55;
+}
+@media(max-width:850px){
+  #credits .more > .game {flex-basis:calc((100% - 44px)/3);}
+}
+@media(max-width:590px){
+  #credits .more {gap:14px;}
+  #credits .more > .game {flex-basis:calc((100% - 14px)/2);}
+}
+@media(prefers-reduced-motion:reduce){
+  #credits .more .cover::before {transition:none;}
+}
