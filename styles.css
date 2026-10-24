@@ -327,3 +327,68 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 
 /* Editorial Bodoni-style About tagline, slightly more restrained in size. */
 #about .about-tagline {font-family:'Bodoni Moda',Didot,'Times New Roman',serif;font-style:italic;font-size:clamp(27px,3vw,43px);font-weight:400;line-height:1.22;}
+
+/* Editorial cinematic experiment: atmospheric light and deliberate hierarchy. */
+.hero {
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 55% 75% at 69% 23%,rgba(180,119,60,.115),transparent 74%),
+    radial-gradient(ellipse 52% 100% at 3% 88%,rgba(94,72,55,.09),transparent 78%),
+    #0e1116;
+}
+.hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(112deg,transparent 43%,rgba(217,185,139,.028) 57%,transparent 73%);
+}
+.hero .container {position:relative;}
+.hero .eyebrow {
+  display:flex;
+  align-items:center;
+  gap:16px;
+  color:#e2c49b;
+  letter-spacing:.17em;
+}
+.hero .eyebrow::before {
+  content:"";
+  display:block;
+  flex:0 0 28px;
+  height:1px;
+  background:var(--gold);
+}
+.hero h1 {text-wrap:balance;text-shadow:0 6px 36px rgba(0,0,0,.13);}
+.hero h1 span {color:#e5bd89;}
+.hero .intro {color:#d0d0ce;}
+.hero-links .hero-contact-link {transition:color .2s ease,border-color .2s ease;}
+.hero-links .hero-contact-link:hover {color:#f1d2a6;}
+/* Section titles echo the hero, while the artwork remains the focal point. */
+#work .section-heading h2,
+#credits > .container > h2 {
+  position:relative;
+  padding-bottom:16px;
+}
+#work .section-heading h2::after,
+#credits > .container > h2::after {
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:44px;
+  height:2px;
+  background:var(--gold);
+  opacity:.8;
+}
+#work .featured .game h3,
+#credits .more .game h3 {letter-spacing:-.025em;}
+#about {background:linear-gradient(145deg,rgba(217,185,139,.028),transparent 47%);}
+#about .about-tagline {color:#e0b883;}
+@media(max-width:590px) {
+  .hero {background:radial-gradient(ellipse 100% 70% at 90% 14%,rgba(180,119,60,.10),transparent 80%),#0e1116;}
+  .hero .eyebrow {gap:9px;}
+  .hero .eyebrow::before {flex-basis:15px;}
+}
