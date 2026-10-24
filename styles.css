@@ -253,3 +253,22 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 }
 /* No project CTA badges; entire poster remains clickable. */
 #credits .more .cover .view {display:none;}
+
+/* Earlier credits: preserve the complete 4:3 artwork and match Additional credits. */
+#credits .early .cover {aspect-ratio:4/3;}
+#credits .early .cover img {object-fit:cover;object-position:center;}
+#credits .early .game:hover .cover {transform:none;border-color:var(--border);}
+#credits .early .game:hover .cover img {transform:none !important;}
+#credits .early .cover::before {
+  content:"";position:absolute;inset:0;
+  border:2px solid transparent;border-radius:inherit;
+  z-index:4;pointer-events:none;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+#credits .early .game:hover .cover::before,
+#credits .early .game:focus-visible .cover::before {
+  border-color:var(--gold);box-shadow:inset 0 0 0 1px #d9b98b55;
+}
+@media(prefers-reduced-motion:reduce){
+  #credits .early .cover::before {transition:none;}
+}
