@@ -617,3 +617,11 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 .project-story-intro p{font-size:19px;line-height:1.85;max-width:800px;color:#c6cbd0}
 .project-story-intro .project-jump{margin-top:34px}
 @media(max-width:700px){.project-cinematic-hero{min-height:590px}.project-cinematic-hero::before{background-position:59% center}.project-cinematic-hero::after{background:linear-gradient(90deg,rgba(11,15,18,.84),rgba(11,15,18,.35)),linear-gradient(0deg,#0e1116,transparent 90%)}.project-cinematic-hero .back{margin-bottom:125px}.project-cinematic-hero>.container{padding-bottom:50px}.project-cinematic-copy h1{font-size:clamp(58px,14vw,90px)}.project-cinematic-copy p{font-size:16px}.project-story-intro{padding:65px 0 45px}.project-story-intro p{font-size:17px}}
+
+/* BioShock case study gallery additions */
+.gallery-intro{color:var(--muted);margin:0 0 25px;line-height:1.7}
+.gallery .gallery-map{grid-column:span 2;aspect-ratio:2.2/1;background:#101114}
+.gallery .gallery-map img{object-fit:contain}
+.minerva-gallery{margin-top:64px}
+.minerva-gallery h3{font-size:clamp(25px,3vw,38px);margin:0 0 24px;letter-spacing:-.035em}
+@media(max-width:700px){.gallery .gallery-map{grid-column:span 1;aspect-ratio:16/10}.minerva-gallery{margin-top:42px}}
