@@ -557,3 +557,8 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
   #work .featured .game p {font-size:11px;}
   #work .section-heading .hint {text-align:left;}
 }
+
+/* Contact links: same understated editorial gold treatment as the hero. */
+#contact .contact-links{display:flex;gap:28px;flex-wrap:wrap;margin-top:27px;align-items:center}
+#contact .contact-links a{font-size:16px;font-weight:700;color:var(--gold);padding-bottom:5px;border-bottom:1px solid rgba(217,185,139,.45);transition:color .18s ease,border-color .18s ease}
+#contact .contact-links a:hover,#contact .contact-links a:focus-visible{color:#f1d2a6;border-bottom-color:currentColor}
