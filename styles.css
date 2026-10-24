@@ -296,3 +296,6 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 }
 .hero-contact-link:hover,
 .hero-contact-link:focus-visible {border-bottom-color:var(--gold);}
+
+/* Keep the two understated hero links clearly separated. */
+.hero-links {display:flex;align-items:center;flex-wrap:wrap;gap:24px;}
