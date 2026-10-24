@@ -188,6 +188,8 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 }
 #work .featured .feature-composition:has(> .feature-main:hover)::after,
 #work .featured .feature-composition:has(> .feature-main:focus-visible)::after,
+#work .featured .feature-composition:has(.expansion-art:hover)::after,
+#work .featured .feature-composition:has(.expansion-art:focus-visible)::after,
 #work .featured .featured-cover:hover::before,
 #work .featured a.game:focus-visible .featured-cover::before {
   border-color:var(--gold);
