@@ -114,3 +114,53 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
     transform:none !important;
   }
 }
+
+/* Keep the Minerva's Den masthead fully visible during DLC preview.
+   The original BioShock cover retains the normal hover animation. */
+#work .featured .feature-main img.feature-primary-image[src$="minerva-feature.webp"] {
+  object-position:center top !important;
+  transform:none !important;
+  transform-origin:center top;
+}
+@media (hover:hover) and (pointer:fine) {
+  #work .featured .game:hover .feature-main img.feature-primary-image[src$="minerva-feature.webp"] {
+    transform:none !important;
+  }
+}
+
+/* Weird West: show the full cover and title without empty sidebars. */
+#work .featured a.game[href="weird-west.html"] .featured-cover {
+  position:relative;overflow:hidden;isolation:isolate;
+}
+#work .featured a.game[href="weird-west.html"] .featured-cover::before {
+  content:"";position:absolute;inset:-14px;z-index:-1;
+  background:url("https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1097350/library_600x900.jpg") center/cover no-repeat;
+  filter:blur(14px) brightness(.58);
+}
+#work .featured a.game[href="weird-west.html"] .featured-cover img {
+  object-fit:contain!important;object-position:center center!important;
+  position:relative;z-index:1;background:transparent!important;
+}
+
+/* Tomb Raider DLC previews: opposite bottom corners, with clear pointer travel space. */
+#work .featured .feature-composition:has(a[href="tomb-raider.html#beneath-the-ashes"]) .feature-expansions.overlay-expansions {
+  left:13px!important;right:13px!important;bottom:13px!important;
+  width:auto!important;max-width:none!important;
+  display:flex!important;justify-content:space-between!important;gap:24px!important;
+}
+#work .featured .feature-composition:has(a[href="tomb-raider.html#beneath-the-ashes"]) .expansion-art {
+  flex:0 0 auto;
+}
+@media(max-width:440px){
+  #work .featured .feature-composition:has(a[href="tomb-raider.html#beneath-the-ashes"]) .feature-expansions.overlay-expansions {
+    left:8px!important;right:8px!important;bottom:8px!important;
+  }
+}
+
+/* Keep both Tomb Raider thumbnails in their bottom corners on narrow cards. */
+#work .featured .feature-composition:has(a[href="tomb-raider.html#beneath-the-ashes"]) .feature-expansions.overlay-expansions {
+  flex-wrap:nowrap!important;
+}
+#work .featured .feature-composition:has(a[href="tomb-raider.html#beneath-the-ashes"]) .expansion-art {
+  max-width:calc((100% - 24px)/2);
+}
