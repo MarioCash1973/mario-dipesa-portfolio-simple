@@ -254,9 +254,11 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 /* No project CTA badges; entire poster remains clickable. */
 #credits .more .cover .view {display:none;}
 
-/* Earlier credits: preserve the complete 4:3 artwork and match Additional credits. */
+/* Earlier credits: crop original artwork into fixed 4:3 frames, matching Additional credits. */
 #credits .early .cover {aspect-ratio:4/3;}
-#credits .early .cover img {object-fit:cover;object-position:center;}
+#credits .early .cover img {object-fit:cover;object-position:center top;}
+/* Preserve the left-hand Tonic Trouble logo; crop the platform branding on the right. */
+#credits .early .game[href="tonic.html"] .cover img {object-position:left top;}
 #credits .early .game:hover .cover {transform:none;border-color:var(--border);}
 #credits .early .game:hover .cover img {transform:none !important;}
 #credits .early .cover::before {
