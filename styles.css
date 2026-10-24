@@ -324,3 +324,6 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 @media(max-width:850px){
   #about .about-tagline {margin-bottom:16px;}
 }
+
+/* Editorial Bodoni-style About tagline, slightly more restrained in size. */
+#about .about-tagline {font-family:'Bodoni Moda',Didot,'Times New Roman',serif;font-style:italic;font-size:clamp(27px,3vw,43px);font-weight:400;line-height:1.22;}
