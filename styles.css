@@ -458,3 +458,40 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
   #work .featured {gap:14px;}
   #work .featured .game h3 {font-size:16px;}
 }
+
+/* BioShock 2 checkpoint hero: replace decorative circle with real project imagery. */
+.hero {
+  background:#101318;
+  isolation:isolate;
+}
+.hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,#101318 0%,rgba(16,19,24,.97) 27%,rgba(16,19,24,.78) 48%,rgba(16,19,24,.34) 74%,rgba(16,19,24,.24) 100%),
+    linear-gradient(0deg,rgba(16,19,24,.62),transparent 35%,rgba(16,19,24,.28)),
+    url('assets/checkpoint-a.webp') right 44% / 64% auto no-repeat;
+  opacity:1;
+}
+.hero .container::after {display:none;}
+.hero .container {z-index:1;}
+.hero h1 {text-shadow:0 3px 25px rgba(0,0,0,.4);}
+@media(max-width:850px){
+  .hero::before {
+    background:
+      linear-gradient(90deg,#101318 0%,rgba(16,19,24,.94) 35%,rgba(16,19,24,.58) 100%),
+      linear-gradient(0deg,#101318,transparent 75%),
+      url('assets/checkpoint-a.webp') right center / cover no-repeat;
+  }
+}
+@media(max-width:590px){
+  .hero::before {
+    background:
+      linear-gradient(90deg,rgba(16,19,24,.92),rgba(16,19,24,.72)),
+      linear-gradient(0deg,#101318,transparent 70%),
+      url('assets/checkpoint-a.webp') 62% center / cover no-repeat;
+  }
+}
