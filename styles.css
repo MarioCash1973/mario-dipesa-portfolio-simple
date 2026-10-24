@@ -625,3 +625,17 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 .minerva-gallery{margin-top:64px}
 .minerva-gallery h3{font-size:clamp(25px,3vw,38px);margin:0 0 24px;letter-spacing:-.035em}
 @media(max-width:700px){.gallery .gallery-map{grid-column:span 1;aspect-ratio:16/10}.minerva-gallery{margin-top:42px}}
+
+/* Cinematic, consistent-size project lightbox */
+.lightbox{position:fixed;inset:0;margin:auto;padding:0;border:1px solid rgba(255,255,255,.13);border-radius:12px;width:min(1240px,94vw);max-width:94vw;max-height:94vh;overflow:hidden;background:#0b0e12;color:#f6f3ed;box-shadow:0 28px 110px rgba(0,0,0,.75)}
+.lightbox::backdrop{background:rgba(0,0,0,.91);backdrop-filter:blur(7px)}
+.lightbox-stage{position:relative;width:100%;height:min(72vh,760px);display:flex;align-items:center;justify-content:center;background:#080b0e}
+.lightbox .lightbox-stage img{display:block;width:100%;height:100%;max-width:none;max-height:none;object-fit:contain}
+.lightbox-arrow,.lightbox-close{position:absolute;z-index:2;display:grid;place-items:center;padding:0;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(12,15,19,.72);color:#fff;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.lightbox-arrow{top:50%;transform:translateY(-50%);width:52px;height:52px;font-family:Georgia,serif;font-size:40px;line-height:1;padding-bottom:6px}
+.lightbox-prev{left:16px}.lightbox-next{right:16px}
+.lightbox-close{top:16px;right:16px;width:39px;height:39px;font-family:Arial,sans-serif;font-size:28px;font-weight:300;line-height:1}
+.lightbox-arrow:hover,.lightbox-close:hover{background:rgba(45,51,57,.96);border-color:var(--gold)}
+.lightbox-arrow:focus-visible,.lightbox-close:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.lightbox-footer{display:flex;justify-content:center;align-items:center;min-height:42px;padding:8px 20px;color:#aeb6bf;font-size:12px;letter-spacing:.15em}
+@media(max-width:700px){.lightbox{width:98vw;max-width:98vw}.lightbox-stage{height:min(68vh,650px)}.lightbox-arrow{width:38px;height:38px;font-size:32px;padding-bottom:5px}.lightbox-prev{left:8px}.lightbox-next{right:8px}.lightbox-close{top:10px;right:10px;width:34px;height:34px;font-size:25px}}
