@@ -157,3 +157,45 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 #work .featured .feature-composition:has(a[href="tomb-raider.html#beneath-the-ashes"]) .expansion-art {
   max-width:calc((100% - 24px)/2);
 }
+
+
+/* Featured artwork: stable framing and gold hover outline (Oct 24 review). */
+/* Stop all poster movement, including the legacy generic .game:hover img rule. */
+#work .featured .game:hover .feature-main img.feature-primary-image,
+#work .featured .game:hover .featured-cover img,
+#work .featured .feature-main img.feature-primary-image,
+#work .featured .featured-cover img {
+  transform:none !important;
+  transition:opacity .18s ease !important;
+  will-change:auto;
+}
+/* Show the full upper edge of the BioShock cover and protect its masthead. */
+#work .featured .game:first-child .feature-main img.feature-primary-image {
+  object-position:center top !important;
+}
+/* Gold inset border only when hovering/focusing the main artwork itself.
+   It does not interfere with the DLC thumbnail hover/preview behavior. */
+#work .featured .feature-composition::after,
+#work .featured .featured-cover::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  border:2px solid transparent;
+  border-radius:inherit;
+  pointer-events:none;
+  z-index:4;
+  transition:border-color .18s ease, box-shadow .18s ease;
+}
+#work .featured .feature-composition:has(> .feature-main:hover)::after,
+#work .featured .feature-composition:has(> .feature-main:focus-visible)::after,
+#work .featured .featured-cover:hover::before,
+#work .featured a.game:focus-visible .featured-cover::before {
+  border-color:var(--gold);
+  box-shadow:inset 0 0 0 1px #d9b98b55;
+}
+/* Remove the old lift on the standalone Weird West card. */
+#work .featured .game:hover .cover {transform:none;}
+@media (prefers-reduced-motion:reduce) {
+  #work .featured .feature-composition::after,
+  #work .featured .featured-cover::before {transition:none;}
+}
