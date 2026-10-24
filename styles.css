@@ -249,7 +249,7 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 /* Additional credits: preserve full Battlefront II masthead without resizing card. */
 #credits .more > .game[href="battlefront.html"] .cover img {
   object-position:center top;
-  object-fit:contain;
+  object-fit:cover;
 }
 /* No project CTA badges; entire poster remains clickable. */
 #credits .more .cover .view {display:none;}
