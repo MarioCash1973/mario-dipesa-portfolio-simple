@@ -392,3 +392,69 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
   .hero .eyebrow {gap:9px;}
   .hero .eyebrow::before {flex-basis:15px;}
 }
+
+/* Editorial cinematic v2: a visibly different, still restrained art direction. */
+.hero {
+  padding:112px 0 108px;
+  background:
+    radial-gradient(ellipse 62% 105% at 100% 46%,rgba(177,113,56,.30),transparent 74%),
+    linear-gradient(115deg,#0e1116 8%,#17181a 58%,#282019 100%);
+  border-bottom:1px solid rgba(217,185,139,.35);
+}
+.hero::before {
+  background:linear-gradient(90deg,transparent 0%,transparent 69%,rgba(217,185,139,.10) 69.1%,transparent 69.25%);
+}
+.hero .container::after {
+  content:"";
+  position:absolute;
+  width:clamp(120px,19vw,270px);
+  height:clamp(120px,19vw,270px);
+  right:-3%;
+  top:1%;
+  border:1px solid rgba(217,185,139,.19);
+  border-radius:50%;
+  box-shadow:0 0 0 28px rgba(217,185,139,.035),0 0 0 58px rgba(217,185,139,.025);
+  pointer-events:none;
+  z-index:-1;
+}
+.hero h1 {position:relative;z-index:1;max-width:1150px;}
+.hero h1 span {
+  font-family:'Bodoni Moda',Didot,Georgia,serif;
+  font-style:italic;
+  font-weight:400;
+  letter-spacing:-.075em;
+  color:#e4b47d;
+}
+.hero .intro {
+  border-left:2px solid rgba(217,185,139,.85);
+  padding-left:22px;
+  max-width:770px;
+  font-size:19px;
+  line-height:1.75;
+}
+.hero-links {padding-left:24px;}
+#work {padding-top:90px;}
+#work .section-heading h2,
+#credits > .container > h2 {
+  font-size:clamp(34px,4.2vw,54px);
+  padding-bottom:20px;
+}
+#work .section-heading h2::after,
+#credits > .container > h2::after {width:86px;height:3px;}
+#work .featured {gap:28px;}
+#work .featured .game h3 {font-size:21px;}
+#about {background:linear-gradient(125deg,rgba(184,118,65,.10),transparent 52%);}
+#about .about-tagline {font-size:clamp(32px,3.6vw,50px);}
+@media(max-width:850px) {
+  .hero {padding:80px 0 82px;}
+  .hero .container::after {opacity:.45;}
+}
+@media(max-width:590px) {
+  .hero {padding:65px 0 70px;background:radial-gradient(ellipse 95% 75% at 95% 5%,rgba(177,113,56,.24),transparent 80%),#0e1116;}
+  .hero .container::after {display:none;}
+  .hero .intro {font-size:17px;padding-left:15px;}
+  .hero-links {padding-left:17px;}
+  #work {padding-top:60px;}
+  #work .featured {gap:14px;}
+  #work .featured .game h3 {font-size:16px;}
+}
