@@ -675,3 +675,15 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 .cinematic-card figcaption span{display:block;margin-top:5px;color:var(--muted);font-size:12px;font-weight:400}
 @media(max-width:800px){.cinematic-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:540px){.cinematic-gallery{grid-template-columns:1fr}}
+
+/* Tomb Raider cinematic video viewer */
+.cinematic-play{display:block;width:100%;padding:0;border:0;background:none;color:inherit;cursor:pointer;text-align:left}
+.cinematic-play .cinematic-thumb{display:block;position:relative}
+.cinematic-play-icon{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:58px;height:58px;border-radius:50%;border:1px solid #ffffff80;background:#0a0e13b8;color:white;font-size:21px;transition:background .2s,transform .2s}
+.cinematic-play:hover .cinematic-play-icon,.cinematic-play:focus-visible .cinematic-play-icon{background:#9c794c;transform:translate(-50%,-50%) scale(1.08)}
+.cinematic-play:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.video-lightbox{position:fixed;inset:0;margin:auto;padding:0;border:1px solid #ffffff33;border-radius:12px;width:min(1100px,96vw);max-width:96vw;max-height:94vh;background:#0b0e12;color:#fff;overflow:hidden}
+.video-lightbox::backdrop{background:#000e;backdrop-filter:blur(7px)}
+.video-lightbox-head{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;font-weight:600}
+.video-lightbox-head button{border:0;background:none;color:#fff;font-size:30px;cursor:pointer}
+.video-lightbox video{display:block;width:100%;max-height:80vh;background:#000}
