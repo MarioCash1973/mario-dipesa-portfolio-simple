@@ -1,4 +1,36 @@
-function coverError(el){el.hidden=true}const lightbox=document.getElementById('lightbox');if(lightbox){const photos=[...document.querySelectorAll('.shot img')];let current=0;const large=document.getElementById('large-photo'),counter=document.getElementById('counter');function show(i){current=(i+photos.length)%photos.length;large.src=photos[current].src;large.alt=photos[current].alt;counter.textContent=(current+1)+' / '+photos.length}document.querySelectorAll('.shot').forEach((b,i)=>b.addEventListener('click',()=>{show(i);lightbox.showModal()}));document.getElementById('prev').addEventListener('click',()=>show(current-1));document.getElementById('next').addEventListener('click',()=>show(current+1));document.getElementById('close').addEventListener('click',()=>lightbox.close());document.addEventListener('keydown',e=>{if(!lightbox.open)return;if(e.key==='ArrowLeft')show(current-1);if(e.key==='ArrowRight')show(current+1)})}
+function coverError(el){el.hidden=true}const lightbox=document.getElementById('lightbox');
+if(lightbox){
+  const galleries=[...document.querySelectorAll('.gallery')];
+  const large=document.getElementById('large-photo');
+  const counter=document.getElementById('counter');
+  let activePhotos=[];
+  let current=0;
+  function show(i){
+    if(!activePhotos.length)return;
+    current=(i+activePhotos.length)%activePhotos.length;
+    large.src=activePhotos[current].src;
+    large.alt=activePhotos[current].alt;
+    counter.textContent=(current+1)+' / '+activePhotos.length;
+  }
+  galleries.forEach(gallery=>{
+    const photos=[...gallery.querySelectorAll('.shot img')];
+    gallery.querySelectorAll('.shot').forEach((button,i)=>{
+      button.addEventListener('click',()=>{
+        activePhotos=photos;
+        show(i);
+        lightbox.showModal();
+      });
+    });
+  });
+  document.getElementById('prev').addEventListener('click',()=>show(current-1));
+  document.getElementById('next').addEventListener('click',()=>show(current+1));
+  document.getElementById('close').addEventListener('click',()=>lightbox.close());
+  document.addEventListener('keydown',e=>{
+    if(!lightbox.open)return;
+    if(e.key==='ArrowLeft')show(current-1);
+    if(e.key==='ArrowRight')show(current+1);
+  });
+}
 /* Featured DLC artwork previews. Keep poster still; frame highlight is CSS-only. */
 document.querySelectorAll('.feature-composition').forEach(card => {
   const poster = card.querySelector('img.feature-primary-image');

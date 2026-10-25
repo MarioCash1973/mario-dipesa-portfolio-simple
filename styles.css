@@ -598,3 +598,99 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 
 /* Square Tonic artwork fills the portrait frame without letterboxing. */
 #credits .early .game[href="tonic.html"] .cover img {object-fit:cover;object-position:center top;}
+
+/* Cinematic project-page hero, isolated to Tomb Raider */
+.project-hero{position:relative;isolation:isolate;overflow:hidden;border-bottom:1px solid var(--border);background:#111419}
+.project-hero::before{content:"";position:absolute;inset:0;z-index:-2;background-image:url("assets/tomb-raider-hero.png");background-position:center 47%;background-size:cover;background-repeat:no-repeat}
+.project-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(12,15,19,.96) 0%,rgba(12,15,19,.85) 34%,rgba(12,15,19,.65) 61%,rgba(12,15,19,.24) 100%),linear-gradient(0deg,#0e1116 0%,transparent 35%)}
+.project-hero .back{margin:34px 0 20px;color:#c3cbd2}
+.project-hero .project-header{margin:10px 0 55px;grid-template-columns:minmax(180px,290px) minmax(0,1fr);gap:clamp(25px,4vw,58px)}
+.project-hero .project-header .cover{box-shadow:0 16px 45px #0009;border-radius:9px}
+.project-hero .project-header .cover::after{display:none}
+.project-hero .project-header h1{font-size:clamp(35px,4.8vw,64px);text-shadow:0 3px 24px #0008}
+.project-hero .detail-intro{color:#e2e3e3;text-shadow:0 2px 10px #0008}
+.project-hero+.container .project-jump{margin-top:0}
+@media(max-width:650px){.project-hero::before{background-position:64% center}.project-hero::after{background:linear-gradient(90deg,#0e1116ed,#0e1116aa),linear-gradient(0deg,#0e1116,transparent 70%)}.project-hero .project-header{grid-template-columns:1fr;gap:20px;margin-bottom:35px}.project-hero .project-header .cover{max-width:210px}}
+
+/* Project pages / BioShock 2 cinematic opening */
+.project-cinematic-hero{position:relative;isolation:isolate;min-height:620px;display:flex;align-items:end;overflow:hidden;background:#101418;border-bottom:1px solid rgba(217,185,139,.25)}
+.project-cinematic-hero::before{content:"";position:absolute;inset:0;z-index:-2;background:url('assets/bioshock-outer-persephone-hero.jpg') center 46% / cover no-repeat}
+.project-cinematic-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(11,15,18,.91) 0%,rgba(11,15,18,.66) 39%,rgba(11,15,18,.10) 100%),linear-gradient(0deg,#0e1116 0%,rgba(14,17,22,.1) 68%,rgba(14,17,22,.22) 100%)}
+.project-cinematic-hero>.container{padding-top:40px;padding-bottom:76px;position:relative}
+.project-cinematic-hero .back{display:inline-block;margin-bottom:110px;font-size:13px}
+.project-cinematic-copy{max-width:760px}
+.project-cinematic-copy h1{font-size:clamp(64px,9vw,132px);line-height:.95;margin:15px 0 22px}
+.project-cinematic-copy h1 em{font-family:'Bodoni Moda',Georgia,serif;font-weight:400;color:var(--gold)}
+.project-cinematic-copy .meta{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:#e4c69b}
+.project-cinematic-copy p{font-size:19px;line-height:1.65;max-width:620px;color:#e1e4e5;text-shadow:0 2px 15px #101418}
+.project-scroll{display:inline-block;margin-top:16px;color:var(--gold);font-size:13px;font-weight:700}
+.project-story-intro{padding:95px 0 65px}
+.project-story-intro .container{max-width:1200px}
+.project-story-intro h2{font-size:clamp(34px,5vw,65px);letter-spacing:-.055em;line-height:1.13;max-width:900px;margin:15px 0 28px}
+.project-story-intro p{font-size:19px;line-height:1.85;max-width:800px;color:#c6cbd0}
+.project-story-intro .project-jump{margin-top:34px}
+@media(max-width:700px){.project-cinematic-hero{min-height:590px}.project-cinematic-hero::before{background-position:59% center}.project-cinematic-hero::after{background:linear-gradient(90deg,rgba(11,15,18,.84),rgba(11,15,18,.35)),linear-gradient(0deg,#0e1116,transparent 90%)}.project-cinematic-hero .back{margin-bottom:125px}.project-cinematic-hero>.container{padding-bottom:50px}.project-cinematic-copy h1{font-size:clamp(58px,14vw,90px)}.project-cinematic-copy p{font-size:16px}.project-story-intro{padding:65px 0 45px}.project-story-intro p{font-size:17px}}
+
+/* BioShock case study gallery additions */
+.gallery-intro{color:var(--muted);margin:0 0 25px;line-height:1.7}
+.gallery .gallery-map{grid-column:span 2;aspect-ratio:2.2/1;background:#101114}
+.gallery .gallery-map img{object-fit:contain}
+.minerva-gallery{margin-top:64px}
+.minerva-gallery h3{font-size:clamp(25px,3vw,38px);margin:0 0 24px;letter-spacing:-.035em}
+@media(max-width:700px){.gallery .gallery-map{grid-column:span 1;aspect-ratio:16/10}.minerva-gallery{margin-top:42px}}
+
+/* Cinematic, consistent-size project lightbox */
+.lightbox{position:fixed;inset:0;margin:auto;padding:0;border:1px solid rgba(255,255,255,.13);border-radius:12px;width:min(1240px,94vw);max-width:94vw;max-height:94vh;overflow:hidden;background:#0b0e12;color:#f6f3ed;box-shadow:0 28px 110px rgba(0,0,0,.75)}
+.lightbox::backdrop{background:rgba(0,0,0,.91);backdrop-filter:blur(7px)}
+.lightbox-stage{position:relative;width:100%;height:min(72vh,760px);display:flex;align-items:center;justify-content:center;background:#080b0e}
+.lightbox .lightbox-stage img{display:block;width:100%;height:100%;max-width:none;max-height:none;object-fit:contain}
+.lightbox-arrow,.lightbox-close{position:absolute;z-index:2;display:grid;place-items:center;padding:0;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(12,15,19,.72);color:#fff;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.lightbox-arrow{top:50%;transform:translateY(-50%);width:52px;height:52px;font-family:Georgia,serif;font-size:40px;line-height:1;padding-bottom:6px}
+.lightbox-prev{left:16px}.lightbox-next{right:16px}
+.lightbox-close{top:16px;right:16px;width:39px;height:39px;font-family:Arial,sans-serif;font-size:28px;font-weight:300;line-height:1}
+.lightbox-arrow:hover,.lightbox-close:hover{background:rgba(45,51,57,.96);border-color:var(--gold)}
+.lightbox-arrow:focus-visible,.lightbox-close:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.lightbox-footer{display:flex;justify-content:center;align-items:center;min-height:42px;padding:8px 20px;color:#aeb6bf;font-size:12px;letter-spacing:.15em}
+@media(max-width:700px){.lightbox{width:98vw;max-width:98vw}.lightbox-stage{height:min(68vh,650px)}.lightbox-arrow{width:38px;height:38px;font-size:32px;padding-bottom:5px}.lightbox-prev{left:8px}.lightbox-next{right:8px}.lightbox-close{top:10px;right:10px;width:34px;height:34px;font-size:25px}}
+
+/* Shared project hero layout with individual game imagery. */
+.project-hero.bioshock-hero::before{background-image:url("assets/bioshock-project-hero.jpg");background-position:center 50%;background-size:cover}
+.project-hero.bioshock-hero::after{background:linear-gradient(90deg,rgba(12,15,19,1) 0%,rgba(12,15,19,.97) 24%,rgba(12,15,19,.82) 43%,rgba(12,15,19,.42) 70%,rgba(12,15,19,.12) 100%),linear-gradient(0deg,#0e1116 0%,transparent 35%)}
+@media(max-width:650px){.project-hero.bioshock-hero::before{background-position:59% center}.project-hero.bioshock-hero::after{background:linear-gradient(90deg,#0e1116ed,#0e1116aa),linear-gradient(0deg,#0e1116,transparent 70%)}}
+
+/* Weird West cinematic hero, matching the BioShock and Tomb Raider layout. */
+.project-hero.weird-west-hero::before{background-image:url("assets/weirdwest-wide.jpg");background-position:right center;background-size:cover;background-repeat:no-repeat;-webkit-mask-image:linear-gradient(90deg,transparent 0%,transparent 19%,rgba(0,0,0,.3) 37%,#000 67%);mask-image:linear-gradient(90deg,transparent 0%,transparent 19%,rgba(0,0,0,.3) 37%,#000 67%)}
+.project-hero.weird-west-hero::after{background:linear-gradient(90deg,#0e1116 0%,rgba(14,17,22,.99) 26%,rgba(14,17,22,.94) 37%,rgba(14,17,22,.73) 49%,rgba(14,17,22,.24) 70%,rgba(14,17,22,.06) 100%),linear-gradient(0deg,#0e1116 0%,transparent 32%)}
+@media(max-width:650px){.project-hero.weird-west-hero::before{background-position:60% center}.project-hero.weird-west-hero::after{background:linear-gradient(90deg,#0e1116ed,#0e1116aa),linear-gradient(0deg,#0e1116,transparent 70%)}}
+
+/* Keep the complete Weird West logo visible in the project poster. */
+.project-hero.weird-west-hero .project-header .cover img{object-fit:cover!important;object-position:center top!important}
+
+/* Tomb Raider cinematic stills, ready for linked video playback. */
+.cinematic-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.cinematic-card{margin:0;min-width:0;overflow:hidden;border:1px solid var(--border);border-radius:9px;background:#1a1e24}
+.cinematic-thumb{aspect-ratio:16/9;overflow:hidden;background:#0e1116}
+.cinematic-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.cinematic-card figcaption{padding:13px 15px;color:#f3f0eb;font-size:14px;font-weight:600}
+.cinematic-card figcaption span{display:block;margin-top:5px;color:var(--muted);font-size:12px;font-weight:400}
+@media(max-width:800px){.cinematic-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:540px){.cinematic-gallery{grid-template-columns:1fr}}
+
+/* Tomb Raider cinematic video viewer */
+.cinematic-play{display:block;width:100%;padding:0;border:0;background:none;color:inherit;cursor:pointer;text-align:left}
+.cinematic-play .cinematic-thumb{display:block;position:relative}
+.cinematic-play-icon{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:58px;height:58px;border-radius:50%;border:1px solid #ffffff80;background:#0a0e13b8;color:white;font-size:21px;transition:background .2s,transform .2s}
+.cinematic-play:hover .cinematic-play-icon,.cinematic-play:focus-visible .cinematic-play-icon{background:#9c794c;transform:translate(-50%,-50%) scale(1.08)}
+.cinematic-play:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.video-lightbox{position:fixed;inset:0;margin:auto;padding:0;border:1px solid #ffffff33;border-radius:12px;width:min(1100px,96vw);max-width:96vw;max-height:94vh;background:#0b0e12;color:#fff;overflow:hidden}
+.video-lightbox::backdrop{background:#000e;backdrop-filter:blur(7px)}
+.video-lightbox-head{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;font-weight:600}
+.video-lightbox-head button{border:0;background:none;color:#fff;font-size:30px;cursor:pointer}
+.video-lightbox video{display:block;width:100%;max-height:80vh;background:#000}
+
+.video-lightbox-actions{padding:12px 16px 16px;text-align:center;border-top:1px solid #ffffff20}
+.video-lightbox-actions[hidden]{display:none}
+.video-lightbox-actions button{border:1px solid #c6a473;border-radius:7px;background:#a27e4d;color:#111418;font:inherit;font-weight:700;padding:10px 24px;cursor:pointer}
+.video-lightbox-actions button:hover,.video-lightbox-actions button:focus-visible{background:#d2ad77}
+
+.expansion-video{margin:18px 0 22px;width:100%;max-width:720px}.expansion-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#050505;border:1px solid #ffffff25;border-radius:8px}
