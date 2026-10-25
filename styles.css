@@ -692,3 +692,5 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 .video-lightbox-actions[hidden]{display:none}
 .video-lightbox-actions button{border:1px solid #c6a473;border-radius:7px;background:#a27e4d;color:#111418;font:inherit;font-weight:700;padding:10px 24px;cursor:pointer}
 .video-lightbox-actions button:hover,.video-lightbox-actions button:focus-visible{background:#d2ad77}
+
+.expansion-video{margin:18px 0 22px;width:100%;max-width:720px}.expansion-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#050505;border:1px solid #ffffff25;border-radius:8px}
