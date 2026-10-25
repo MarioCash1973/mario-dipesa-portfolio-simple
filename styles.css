@@ -699,3 +699,13 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 #beneath-the-ashes .cinematic-gallery{grid-template-columns:minmax(0,1fr);width:min(100%,388px)}
 #beneath-the-ashes .cinematic-thumb img{transform:translateX(7px) scale(1.025);transform-origin:center;}
 @media(max-width:800px){#beneath-the-ashes .cinematic-gallery{width:min(100%,388px)}}
+
+/* Donald Duck cover: crop the narrow dark side strips while retaining the full title. */
+#credits .early .game:has(img[src$="donald-duck-goin-quackers.webp"]) .cover img {
+  width:104%;
+  max-width:none;
+  height:104%;
+  margin-left:-2%;
+  object-fit:cover;
+  object-position:center top;
+}
