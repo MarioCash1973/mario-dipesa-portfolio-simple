@@ -687,3 +687,8 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 .video-lightbox-head{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;font-weight:600}
 .video-lightbox-head button{border:0;background:none;color:#fff;font-size:30px;cursor:pointer}
 .video-lightbox video{display:block;width:100%;max-height:80vh;background:#000}
+
+.video-lightbox-actions{padding:12px 16px 16px;text-align:center;border-top:1px solid #ffffff20}
+.video-lightbox-actions[hidden]{display:none}
+.video-lightbox-actions button{border:1px solid #c6a473;border-radius:7px;background:#a27e4d;color:#111418;font:inherit;font-weight:700;padding:10px 24px;cursor:pointer}
+.video-lightbox-actions button:hover,.video-lightbox-actions button:focus-visible{background:#d2ad77}
