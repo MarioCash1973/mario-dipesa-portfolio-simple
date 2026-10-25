@@ -694,3 +694,8 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 .video-lightbox-actions button:hover,.video-lightbox-actions button:focus-visible{background:#d2ad77}
 
 .expansion-video{margin:18px 0 22px;width:100%;max-width:720px}.expansion-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#050505;border:1px solid #ffffff25;border-radius:8px}
+
+/* Match the Beneath the Ashes video card to the main three-column gallery. */
+#beneath-the-ashes .cinematic-gallery{grid-template-columns:minmax(0,1fr);width:min(100%,388px)}
+#beneath-the-ashes .cinematic-thumb img{transform:translateX(7px) scale(1.025);transform-origin:center;}
+@media(max-width:800px){#beneath-the-ashes .cinematic-gallery{width:min(100%,388px)}}
