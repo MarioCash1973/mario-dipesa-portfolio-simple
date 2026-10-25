@@ -665,3 +665,13 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 
 /* Keep the complete Weird West logo visible in the project poster. */
 .project-hero.weird-west-hero .project-header .cover img{object-fit:cover!important;object-position:center top!important}
+
+/* Tomb Raider cinematic stills, ready for linked video playback. */
+.cinematic-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.cinematic-card{margin:0;min-width:0;overflow:hidden;border:1px solid var(--border);border-radius:9px;background:#1a1e24}
+.cinematic-thumb{aspect-ratio:16/9;overflow:hidden;background:#0e1116}
+.cinematic-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.cinematic-card figcaption{padding:13px 15px;color:#f3f0eb;font-size:14px;font-weight:600}
+.cinematic-card figcaption span{display:block;margin-top:5px;color:var(--muted);font-size:12px;font-weight:400}
+@media(max-width:800px){.cinematic-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:540px){.cinematic-gallery{grid-template-columns:1fr}}
