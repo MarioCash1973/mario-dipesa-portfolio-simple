@@ -664,4 +664,4 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 @media(max-width:650px){.project-hero.weird-west-hero::before{background-position:60% center}.project-hero.weird-west-hero::after{background:linear-gradient(90deg,#0e1116ed,#0e1116aa),linear-gradient(0deg,#0e1116,transparent 70%)}}
 
 /* Keep the complete Weird West logo visible in the project poster. */
-.project-hero.weird-west-hero .project-header .cover img{object-fit:contain!important;object-position:center center!important}
+.project-hero.weird-west-hero .project-header .cover img{object-fit:cover!important;object-position:center top!important}
