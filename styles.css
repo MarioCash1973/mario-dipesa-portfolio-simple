@@ -709,3 +709,7 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
   object-fit:cover;
   object-position:center top;
 }
+
+/* Unified portfolio wordmark: quiet two-tone signature. */
+.brand{letter-spacing:-.035em}
+.brand .brand-surname{color:var(--gold)}
