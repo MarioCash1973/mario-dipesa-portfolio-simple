@@ -719,3 +719,7 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 #about .about > div:last-child p {line-height:1.85;margin:0 0 1.35em;overflow-wrap:break-word;}
 #about .about > div:last-child p:last-child {margin-bottom:0;}
 @media (max-width: 760px) {#about .about > div:last-child {max-width:100%;}#about .about > div:last-child p {line-height:1.75;margin-bottom:1.25em;}}
+
+/* Distinct, accessible screenplay link in both language versions */
+#about a[href$="TRUNK_MarioDiPesa.pdf"]{color:var(--gold);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;font-weight:600;}
+#about a[href$="TRUNK_MarioDiPesa.pdf"]:hover,#about a[href$="TRUNK_MarioDiPesa.pdf"]:focus-visible{color:#f1d2a6;text-decoration-thickness:2px;}
