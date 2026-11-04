@@ -713,3 +713,9 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 /* Unified portfolio wordmark: quiet two-tone signature. */
 .brand{letter-spacing:-.035em}
 .brand .brand-surname{color:var(--gold)}
+
+/* Readable long-form biography on desktop and mobile */
+#about .about > div:last-child {max-width:680px;min-width:0;}
+#about .about > div:last-child p {line-height:1.85;margin:0 0 1.35em;overflow-wrap:break-word;}
+#about .about > div:last-child p:last-child {margin-bottom:0;}
+@media (max-width: 760px) {#about .about > div:last-child {max-width:100%;}#about .about > div:last-child p {line-height:1.75;margin-bottom:1.25em;}}
