@@ -746,3 +746,7 @@ header .container>.brand{flex-shrink:0}
 .cursor-ship-toggle[aria-pressed="true"]:hover,.cursor-ship-toggle[aria-pressed="true"]:focus-visible{color:#c7a576;opacity:1}
 .elastic-cursor-dot.is-spaceship{color:#b7c5d2}
 @media(max-width:650px){.cursor-ship-toggle{margin-left:-12px;margin-right:0}}
+
+/* Explicit SVG path fill: the star path otherwise defaults to black. */
+.cursor-ship-toggle[aria-pressed="true"] svg path{fill:#ad8d5e!important;}
+.cursor-ship-toggle[aria-pressed="true"]:hover svg path,.cursor-ship-toggle[aria-pressed="true"]:focus-visible svg path{fill:#c7a576!important;}
