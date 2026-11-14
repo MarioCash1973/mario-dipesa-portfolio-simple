@@ -725,5 +725,6 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 #about a[href$="TRUNK_MarioDiPesa.pdf"]:hover,#about a[href$="TRUNK_MarioDiPesa.pdf"]:focus-visible{color:#f1d2a6;text-decoration-thickness:2px;}
 
 /* Elastic gold cursor, enabled on mouse devices only. */
-.elastic-cursor-dot{position:fixed;top:0;left:0;width:13px;height:13px;border-radius:50%;background:#e0b883;box-shadow:0 0 0 1px #ffffff55,0 0 18px #e0b88366;pointer-events:none;z-index:9999;opacity:0;will-change:transform;}
+.elastic-cursor-dot{position:fixed;top:0;left:0;width:20px;height:20px;pointer-events:none;z-index:9999;opacity:0;will-change:transform;transform-origin:center center;filter:drop-shadow(0 0 5px #e0b88380);}
+.elastic-cursor-dot svg{display:block;width:100%;height:100%;fill:#e0b883;}
 @media(pointer:coarse),(prefers-reduced-motion:reduce){.elastic-cursor-dot{display:none!important;}}
