@@ -106,6 +106,7 @@ document.querySelectorAll('.feature-composition').forEach(card => {
   // A quiet easter egg beside the site wordmark, on every page.
   const shipMarkup='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 1.5 21.4 11 25.5 13.3 29 26 20 22.8 16 29 12 22.8 3 26 6.5 13.3 10.6 11Z" fill="currentColor"/><path d="M16 8 18.3 16 16 20 13.7 16Z" fill="#11161c" opacity=".75"/></svg>';
   let shipMode=false;
+  let shipHeading=0; // degrees; ship SVG points upward at zero
   const brand=document.querySelector('header .brand');
   if(brand){
     const toggle=document.createElement('button');
@@ -161,7 +162,14 @@ document.querySelectorAll('.feature-composition').forEach(card => {
       if(dist>90){x=tx+(x-tx)*90/dist;y=ty+(y-ty)*90/dist;vx*=.7;vy*=.7;}
       const separation=Math.hypot(tx-x,ty-y);
       const scale=1-0.45*Math.min(separation/90,1);
-      dot.style.transform=`translate3d(${x-10}px,${y-10}px,0) scale(${scale})`;
+      // Turn the ship's nose toward its actual velocity, not the cursor target.
+      const movementSpeed=Math.hypot(vx,vy);
+      if(shipMode && movementSpeed>12){
+        const targetHeading=Math.atan2(vy,vx)*180/Math.PI+90;
+        const delta=((targetHeading-shipHeading+540)%360)-180;
+        shipHeading+=delta*Math.min(1,dt*18);
+      }
+      dot.style.transform=`translate3d(${x-10}px,${y-10}px,0) rotate(${shipMode?shipHeading:0}deg) scale(${scale})`;
       // Sample the actual curved trajectory, limiting both its age and distance.
       const speed=Math.hypot(vx,vy);
       const strength=Math.min(speed/620,1);
