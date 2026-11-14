@@ -119,21 +119,23 @@ document.querySelectorAll('.feature-composition').forEach(card => {
   function frame(now){
     const dt=Math.min((now-last)/1000,.04);last=now;
     if(started){
-      vx+=((tx-x)*150-vx*19)*dt;vy+=((ty-y)*150-vy*19)*dt;
+      vx+=((tx-x)*105-vx*16)*dt;vy+=((ty-y)*105-vy*16)*dt;
       x+=vx*dt;y+=vy*dt;
       const dist=Math.hypot(tx-x,ty-y);
-      if(dist>70){x=tx+(x-tx)*70/dist;y=ty+(y-ty)*70/dist;vx*=.7;vy*=.7;}
+      if(dist>90){x=tx+(x-tx)*90/dist;y=ty+(y-ty)*90/dist;vx*=.7;vy*=.7;}
       const separation=Math.hypot(tx-x,ty-y);
-      const scale=1-0.42*Math.min(separation/70,1);
+      const scale=1-0.45*Math.min(separation/90,1);
       dot.style.transform=`translate3d(${x-10}px,${y-10}px,0) scale(${scale})`;
       // A short luminous tail follows the star's actual travel direction, fading at rest.
       const speed=Math.hypot(vx,vy);
-      const strength=Math.min(speed/650,1);
-      const length=8+42*strength;
+      const strength=Math.min(speed/620,1);
+      const length=10+70*strength;
       const angle=Math.atan2(vy,vx)*180/Math.PI;
       trail.style.width=`${length}px`;
       trail.style.transform=`translate3d(${x-length}px,${y-1.5}px,0) rotate(${angle}deg)`;
-      trail.style.opacity=String(Math.min(strength*.75, .75));
+      trail.style.opacity=String(Math.min(strength*.95, .95));
+      const glow=Math.min(speed/750,1);
+      dot.style.filter=`drop-shadow(0 0 ${5+8*glow}px rgba(224,184,131,${0.5+0.45*glow})) drop-shadow(0 0 ${3+10*glow}px rgba(255,224,174,${0.12+0.4*glow}))`;
     }
     requestAnimationFrame(frame);
   }
