@@ -723,3 +723,7 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 /* Distinct, accessible screenplay link in both language versions */
 #about a[href$="TRUNK_MarioDiPesa.pdf"]{color:var(--gold);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;font-weight:600;}
 #about a[href$="TRUNK_MarioDiPesa.pdf"]:hover,#about a[href$="TRUNK_MarioDiPesa.pdf"]:focus-visible{color:#f1d2a6;text-decoration-thickness:2px;}
+
+/* Elastic gold cursor, enabled on mouse devices only. */
+.elastic-cursor-dot{position:fixed;top:0;left:0;width:13px;height:13px;border-radius:50%;background:#e0b883;box-shadow:0 0 0 1px #ffffff55,0 0 18px #e0b88366;pointer-events:none;z-index:9999;opacity:0;will-change:transform;}
+@media(pointer:coarse),(prefers-reduced-motion:reduce){.elastic-cursor-dot{display:none!important;}}
