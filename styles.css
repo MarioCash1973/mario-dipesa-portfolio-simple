@@ -730,5 +730,5 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 @media(pointer:coarse),(prefers-reduced-motion:reduce){.elastic-cursor-dot{display:none!important;}}
 
 /* Subtle shooting-star tail: scales with motion and disappears when still. */
-.elastic-cursor-trail{position:fixed;left:0;top:0;height:4px;width:10px;border-radius:100% 50% 50% 100%;background:linear-gradient(90deg,transparent 0%,rgba(224,184,131,.24) 22%,rgba(224,184,131,.95) 100%);box-shadow:0 0 11px rgba(224,184,131,.46);pointer-events:none;z-index:9998;opacity:0;transform-origin:right center;will-change:transform,width,opacity;}
+.elastic-cursor-trail{position:fixed;inset:0;pointer-events:none;z-index:9998;display:block;}
 @media(pointer:coarse),(prefers-reduced-motion:reduce){.elastic-cursor-trail{display:none!important;}}
