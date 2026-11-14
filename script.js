@@ -102,6 +102,29 @@ document.querySelectorAll('.feature-composition').forEach(card => {
   const dot=document.createElement('div');
   dot.className='elastic-cursor-dot';
   dot.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0.5 C13.2 7.5 16.5 10.8 23.5 12 C16.5 13.2 13.2 16.5 12 23.5 C10.8 16.5 7.5 13.2 0.5 12 C7.5 10.8 10.8 7.5 12 0.5 Z"/></svg>';
+  const starMarkup=dot.innerHTML;
+  // A quiet easter egg beside the site wordmark, on every page.
+  const shipMarkup='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 1.5 21.4 11 25.5 13.3 29 26 20 22.8 16 29 12 22.8 3 26 6.5 13.3 10.6 11Z" fill="currentColor"/><path d="M16 8 18.3 16 16 20 13.7 16Z" fill="#11161c" opacity=".75"/></svg>';
+  let shipMode=false;
+  const brand=document.querySelector('header .brand');
+  if(brand){
+    const toggle=document.createElement('button');
+    toggle.type='button';
+    toggle.className='cursor-ship-toggle';
+    toggle.setAttribute('aria-label','Toggle spaceship cursor');
+    toggle.setAttribute('aria-pressed','false');
+    toggle.title='A little surprise';
+    toggle.innerHTML=shipMarkup;
+    brand.insertAdjacentElement('afterend',toggle);
+    toggle.addEventListener('click',()=>{
+      shipMode=!shipMode;
+      toggle.setAttribute('aria-pressed',String(shipMode));
+      dot.innerHTML=shipMode?shipMarkup:starMarkup;
+      dot.classList.toggle('is-spaceship',shipMode);
+      points=[];
+      ctx.clearRect(0,0,trail.width/dpr,trail.height/dpr);
+    });
+  }
   dot.setAttribute('aria-hidden','true');
   document.body.appendChild(dot);
   // Draw a curved comet tail through the star's recent positions.
@@ -153,7 +176,7 @@ document.querySelectorAll('.feature-composition').forEach(card => {
       if(points.length>2 && strength>.015){
         ctx.lineCap='round';
         ctx.lineJoin='round';
-        ctx.shadowColor='rgba(224,184,131,.85)';
+        ctx.shadowColor=shipMode?'rgba(183,197,210,.85)':'rgba(224,184,131,.85)';
         ctx.shadowBlur=10;
         for(let i=1;i<points.length;i++){
           const a=points[i-1],b=points[i];
@@ -163,13 +186,15 @@ document.querySelectorAll('.feature-composition').forEach(card => {
           ctx.moveTo(a.x,a.y);
           ctx.lineTo(b.x,b.y);
           ctx.lineWidth=1+3*(i/points.length);
-          ctx.strokeStyle=`rgba(224,184,131,${opacity})`;
+          ctx.strokeStyle=shipMode?`rgba(183,197,210,${opacity})`:`rgba(224,184,131,${opacity})`;
           ctx.stroke();
         }
         ctx.shadowBlur=0;
       }
       const glow=Math.min(speed/750,1);
-      dot.style.filter=`drop-shadow(0 0 ${5+8*glow}px rgba(224,184,131,${0.5+0.45*glow})) drop-shadow(0 0 ${3+10*glow}px rgba(255,224,174,${0.12+0.4*glow}))`;
+      dot.style.filter=shipMode
+        ? `drop-shadow(0 0 ${5+8*glow}px rgba(183,197,210,${0.5+0.45*glow})) drop-shadow(0 0 ${3+10*glow}px rgba(225,235,245,${0.12+0.4*glow}))`
+        : `drop-shadow(0 0 ${5+8*glow}px rgba(224,184,131,${0.5+0.45*glow})) drop-shadow(0 0 ${3+10*glow}px rgba(255,224,174,${0.12+0.4*glow}))`;
     }
     requestAnimationFrame(frame);
   }
