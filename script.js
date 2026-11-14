@@ -101,6 +101,7 @@ document.querySelectorAll('.feature-composition').forEach(card => {
   if(!window.matchMedia('(pointer:fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   const dot=document.createElement('div');
   dot.className='elastic-cursor-dot';
+  dot.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0.5 C13.2 7.5 16.5 10.8 23.5 12 C16.5 13.2 13.2 16.5 12 23.5 C10.8 16.5 7.5 13.2 0.5 12 C7.5 10.8 10.8 7.5 12 0.5 Z"/></svg>';
   dot.setAttribute('aria-hidden','true');
   document.body.appendChild(dot);
   let tx=0,ty=0,x=0,y=0,vx=0,vy=0,started=false,last=performance.now();
@@ -118,7 +119,9 @@ document.querySelectorAll('.feature-composition').forEach(card => {
       x+=vx*dt;y+=vy*dt;
       const dist=Math.hypot(tx-x,ty-y);
       if(dist>70){x=tx+(x-tx)*70/dist;y=ty+(y-ty)*70/dist;vx*=.7;vy*=.7;}
-      dot.style.transform=`translate3d(${x-6.5}px,${y-6.5}px,0)`;
+      const separation=Math.hypot(tx-x,ty-y);
+      const scale=1-0.42*Math.min(separation/70,1);
+      dot.style.transform=`translate3d(${x-10}px,${y-10}px,0) scale(${scale})`;
     }
     requestAnimationFrame(frame);
   }
