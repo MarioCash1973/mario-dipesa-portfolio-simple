@@ -114,12 +114,15 @@ document.querySelectorAll('.feature-composition').forEach(card => {
     toggle.className='cursor-ship-toggle';
     toggle.setAttribute('aria-label','Toggle spaceship cursor');
     toggle.setAttribute('aria-pressed','false');
-    toggle.title='A little surprise';
+    toggle.title='Switch to spaceship cursor';
     toggle.innerHTML=shipMarkup;
     brand.insertAdjacentElement('afterend',toggle);
     toggle.addEventListener('click',()=>{
       shipMode=!shipMode;
       toggle.setAttribute('aria-pressed',String(shipMode));
+      toggle.innerHTML=shipMode?starMarkup:shipMarkup;
+      toggle.setAttribute('aria-label',shipMode?'Switch to star cursor':'Switch to spaceship cursor');
+      toggle.title=shipMode?'Switch to star cursor':'Switch to spaceship cursor';
       dot.innerHTML=shipMode?shipMarkup:starMarkup;
       dot.classList.toggle('is-spaceship',shipMode);
       points=[];
