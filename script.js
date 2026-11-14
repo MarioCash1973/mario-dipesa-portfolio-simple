@@ -95,3 +95,32 @@ document.querySelectorAll('.feature-composition').forEach(card => {
     if (!card.contains(e.relatedTarget)) restore();
   });
 });
+
+/* Elastic cursor follower: spring physics from the approved portfolio demo. */
+(()=>{
+  if(!window.matchMedia('(pointer:fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const dot=document.createElement('div');
+  dot.className='elastic-cursor-dot';
+  dot.setAttribute('aria-hidden','true');
+  document.body.appendChild(dot);
+  let tx=0,ty=0,x=0,y=0,vx=0,vy=0,started=false,last=performance.now();
+  document.addEventListener('pointermove',e=>{
+    if(e.pointerType!=='mouse')return;
+    tx=e.clientX;ty=e.clientY;
+    if(!started){x=tx;y=ty;started=true;dot.style.opacity='1';}
+  },{passive:true});
+  document.addEventListener('pointerleave',()=>{dot.style.opacity='0';});
+  document.addEventListener('pointerenter',()=>{if(started)dot.style.opacity='1';});
+  function frame(now){
+    const dt=Math.min((now-last)/1000,.04);last=now;
+    if(started){
+      vx+=((tx-x)*150-vx*19)*dt;vy+=((ty-y)*150-vy*19)*dt;
+      x+=vx*dt;y+=vy*dt;
+      const dist=Math.hypot(tx-x,ty-y);
+      if(dist>70){x=tx+(x-tx)*70/dist;y=ty+(y-ty)*70/dist;vx*=.7;vy*=.7;}
+      dot.style.transform=`translate3d(${x-6.5}px,${y-6.5}px,0)`;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
