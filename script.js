@@ -104,17 +104,30 @@ document.querySelectorAll('.feature-composition').forEach(card => {
   dot.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0.5 C13.2 7.5 16.5 10.8 23.5 12 C16.5 13.2 13.2 16.5 12 23.5 C10.8 16.5 7.5 13.2 0.5 12 C7.5 10.8 10.8 7.5 12 0.5 Z"/></svg>';
   dot.setAttribute('aria-hidden','true');
   document.body.appendChild(dot);
-  const trail=document.createElement('div');
+  // Draw a curved comet tail through the star's recent positions.
+  const trail=document.createElement('canvas');
   trail.className='elastic-cursor-trail';
   trail.setAttribute('aria-hidden','true');
   document.body.insertBefore(trail,dot);
+  const ctx=trail.getContext('2d');
+  let points=[],dpr=1;
+  function resizeTrail(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    trail.width=Math.round(innerWidth*dpr);
+    trail.height=Math.round(innerHeight*dpr);
+    trail.style.width=innerWidth+'px';
+    trail.style.height=innerHeight+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resizeTrail();
+  window.addEventListener('resize',resizeTrail,{passive:true});
   let tx=0,ty=0,x=0,y=0,vx=0,vy=0,started=false,last=performance.now();
   document.addEventListener('pointermove',e=>{
     if(e.pointerType!=='mouse')return;
     tx=e.clientX;ty=e.clientY;
     if(!started){x=tx;y=ty;started=true;dot.style.opacity='1';}
   },{passive:true});
-  document.addEventListener('pointerleave',()=>{dot.style.opacity='0';trail.style.opacity='0';});
+  document.addEventListener('pointerleave',()=>{dot.style.opacity='0';points=[];ctx.clearRect(0,0,trail.width/dpr,trail.height/dpr);});
   document.addEventListener('pointerenter',()=>{if(started)dot.style.opacity='1';});
   function frame(now){
     const dt=Math.min((now-last)/1000,.04);last=now;
@@ -126,14 +139,35 @@ document.querySelectorAll('.feature-composition').forEach(card => {
       const separation=Math.hypot(tx-x,ty-y);
       const scale=1-0.45*Math.min(separation/90,1);
       dot.style.transform=`translate3d(${x-10}px,${y-10}px,0) scale(${scale})`;
-      // A short luminous tail follows the star's actual travel direction, fading at rest.
+      // Sample the actual curved trajectory, limiting both its age and distance.
       const speed=Math.hypot(vx,vy);
       const strength=Math.min(speed/620,1);
-      const length=10+70*strength;
-      const angle=Math.atan2(vy,vx)*180/Math.PI;
-      trail.style.width=`${length}px`;
-      trail.style.transform=`translate3d(${x-length}px,${y-1.5}px,0) rotate(${angle}deg)`;
-      trail.style.opacity=String(Math.min(strength*.95, .95));
+      points.push({x,y,t:now});
+      while(points.length>2 && now-points[0].t>240)points.shift();
+      let distance=0;
+      for(let i=points.length-1;i>0;i--){
+        distance+=Math.hypot(points[i].x-points[i-1].x,points[i].y-points[i-1].y);
+        if(distance>105){points.splice(0,i);break;}
+      }
+      ctx.clearRect(0,0,trail.width/dpr,trail.height/dpr);
+      if(points.length>2 && strength>.015){
+        ctx.lineCap='round';
+        ctx.lineJoin='round';
+        ctx.shadowColor='rgba(224,184,131,.85)';
+        ctx.shadowBlur=10;
+        for(let i=1;i<points.length;i++){
+          const a=points[i-1],b=points[i];
+          const age=Math.min((now-b.t)/240,1);
+          const opacity=(1-age)*Math.min(strength*1.1,.95);
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.lineWidth=1+3*(i/points.length);
+          ctx.strokeStyle=`rgba(224,184,131,${opacity})`;
+          ctx.stroke();
+        }
+        ctx.shadowBlur=0;
+      }
       const glow=Math.min(speed/750,1);
       dot.style.filter=`drop-shadow(0 0 ${5+8*glow}px rgba(224,184,131,${0.5+0.45*glow})) drop-shadow(0 0 ${3+10*glow}px rgba(255,224,174,${0.12+0.4*glow}))`;
     }
