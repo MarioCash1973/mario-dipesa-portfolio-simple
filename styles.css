@@ -732,3 +732,13 @@ html{scroll-padding-top:100px}.credit-section{scroll-margin-top:95px}.credit-lay
 /* Subtle shooting-star tail: scales with motion and disappears when still. */
 .elastic-cursor-trail{position:fixed;inset:0;pointer-events:none;z-index:9998;display:block;}
 @media(pointer:coarse),(prefers-reduced-motion:reduce){.elastic-cursor-trail{display:none!important;}}
+
+/* Tiny spaceship easter egg next to the wordmark. */
+header .container>.brand{flex-shrink:0}
+.cursor-ship-toggle{flex:0 0 auto;display:grid;place-items:center;width:25px;height:28px;margin-left:-8px;margin-right:auto;padding:3px;border:0;border-radius:5px;background:transparent;color:#858d98;opacity:.72;cursor:pointer;transition:color .2s,opacity .2s,transform .2s}
+.cursor-ship-toggle svg{display:block;width:17px;height:17px}
+.cursor-ship-toggle:hover,.cursor-ship-toggle:focus-visible,.cursor-ship-toggle[aria-pressed="true"]{color:#c2ccd6;opacity:1;transform:translateY(-1px)}
+.elastic-cursor-dot.is-spaceship svg{fill:#b7c5d2}
+.elastic-cursor-dot.is-spaceship svg path{fill:currentColor}
+.elastic-cursor-dot.is-spaceship{color:#b7c5d2}
+@media(max-width:650px){.cursor-ship-toggle{margin-left:-12px;margin-right:0}}
