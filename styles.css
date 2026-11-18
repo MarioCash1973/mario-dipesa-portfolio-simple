@@ -750,3 +750,13 @@ header .container>.brand{flex-shrink:0}
 /* Explicit SVG path fill: the star path otherwise defaults to black. */
 .cursor-ship-toggle[aria-pressed="true"] svg path{fill:#ad8d5e!important;}
 .cursor-ship-toggle[aria-pressed="true"]:hover svg path,.cursor-ship-toggle[aria-pressed="true"]:focus-visible svg path{fill:#c7a576!important;}
+
+/* Weird West: distinct editorial gallery for narrative and dialogue samples. */
+.writing-samples-section{border-top:1px solid var(--border)}
+.writing-samples-intro{max-width:720px;color:#c4cad0;line-height:1.8;margin:14px 0 30px}
+.writing-samples-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.writing-samples-empty{grid-column:1/-1;display:flex;align-items:center;gap:22px;padding:30px 32px;border:1px dashed rgba(217,185,139,.32);border-radius:8px;background:rgba(217,185,139,.035)}
+.writing-samples-symbol{font-size:27px;color:var(--gold);opacity:.75}
+.writing-samples-empty h3{font-size:18px;margin:0 0 7px}
+.writing-samples-empty p{font-size:14px;color:var(--muted);margin:0;line-height:1.6}
+@media(max-width:700px){.writing-samples-grid{grid-template-columns:1fr}.writing-samples-empty{padding:24px 20px;gap:15px}}
