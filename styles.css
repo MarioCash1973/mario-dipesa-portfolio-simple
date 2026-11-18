@@ -760,3 +760,15 @@ header .container>.brand{flex-shrink:0}
 .writing-samples-empty h3{font-size:18px;margin:0 0 7px}
 .writing-samples-empty p{font-size:14px;color:var(--muted);margin:0;line-height:1.6}
 @media(max-width:700px){.writing-samples-grid{grid-template-columns:1fr}.writing-samples-empty{padding:24px 20px;gap:15px}}
+
+/* Weird West writing sample document cards */
+.writing-sample-card{display:flex;flex-direction:column;align-items:flex-start;position:relative;min-height:270px;padding:25px 24px;border:1px solid rgba(217,185,139,.25);border-radius:8px;background:linear-gradient(150deg,#1b2028,#13171d);transition:border-color .2s,transform .2s,background .2s}
+.writing-sample-card:hover,.writing-sample-card:focus-visible{border-color:var(--gold);transform:translateY(-3px)}
+.writing-sample-number{font-size:10px;letter-spacing:.15em;color:var(--gold);font-weight:700}
+.writing-sample-file-icon{position:absolute;right:23px;top:22px;font-size:10px;font-weight:700;letter-spacing:.08em;color:#b4bbc2;border:1px solid #59616b;padding:5px 7px;border-radius:3px}
+.writing-sample-card h3{font-size:22px;letter-spacing:-.035em;margin:28px 0 7px}
+.writing-sample-type{font-size:12px;color:var(--gold)}
+.writing-sample-card p{font-size:13px;line-height:1.65;color:#bfc6cc;margin:15px 0 25px}
+.writing-sample-action{font-size:13px;font-weight:700;color:var(--gold);margin-top:auto}
+@media(max-width:900px){.writing-samples-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:590px){.writing-samples-grid{grid-template-columns:1fr}.writing-sample-card{min-height:235px}}
