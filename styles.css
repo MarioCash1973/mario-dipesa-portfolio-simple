@@ -777,3 +777,16 @@ header .container>.brand{flex-shrink:0}
 .writing-sample-thumb{display:block;width:100%;aspect-ratio:1740/1164;margin:24px 0 4px;overflow:hidden;border:1px solid #414852;border-radius:5px;background:#171b20}
 .writing-sample-thumb img{display:block;width:100%;height:100%;object-fit:contain}
 .writing-sample-card:has(.writing-sample-thumb) h3{margin-top:17px}
+
+/* In-page writing sample PDF viewer */
+.writing-pdf-dialog{position:fixed;inset:0;width:min(96vw,1500px);max-width:none;height:min(94dvh,1100px);max-height:none;padding:0;border:1px solid #4d525b;border-radius:9px;background:#16191f;color:#f1f0ed;box-shadow:0 22px 80px #000b;overflow:hidden}
+.writing-pdf-dialog::backdrop{background:rgba(0,0,0,.86)}
+.writing-pdf-dialog[open]{display:flex;flex-direction:column}
+.writing-pdf-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid #363b45}
+.writing-pdf-toolbar strong{font-size:16px}
+.writing-pdf-actions{display:flex;align-items:center;gap:20px}
+.writing-pdf-actions a{color:var(--gold);font-size:13px}
+.writing-pdf-actions button{background:transparent;border:0;color:#f5f2ec;font-size:29px;line-height:1;cursor:pointer}
+.writing-pdf-dialog iframe{display:block;flex:1;min-height:0;width:100%;border:0;background:#e8e8e8}
+.writing-pdf-fallback{margin:0;padding:7px 16px;color:#adb3bb;font-size:11px;text-align:center}
+@media(max-width:650px){.writing-pdf-dialog{width:100vw;height:100dvh;border-radius:0}.writing-pdf-toolbar{padding:12px}.writing-pdf-actions{gap:10px}.writing-pdf-actions a{font-size:11px}}
