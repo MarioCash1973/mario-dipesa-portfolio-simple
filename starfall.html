@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>STARFALL | Hidden Jump</title><link rel="stylesheet" href="styles.css"><style>
-body{min-height:100dvh;background:radial-gradient(ellipse at 50% 30%,#172c48,#080d16 65%,#04060b);overflow-x:hidden}
+body{min-height:100dvh;background:radial-gradient(ellipse at 50% 30%,#172c48,#080d16 65%,#04060b);overflow-x:hidden;animation:starfall-arrival-fade 1.1s ease-out both}
+@keyframes starfall-arrival-fade{from{opacity:0}to{opacity:1}}
 .starfall-arrival{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:36px 24px;position:relative}
 .starfall-arrival:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(#d7e6ff 1px,transparent 1px);background-size:71px 83px;opacity:.23}
 .starfall-arrival>*{position:relative}.starfall-ship{width:95px;height:95px;color:#c8d8eb;filter:drop-shadow(0 0 20px #87b7ff88);animation:float 3s ease-in-out infinite}
