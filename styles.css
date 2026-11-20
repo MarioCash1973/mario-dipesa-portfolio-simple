@@ -792,47 +792,14 @@ header .container>.brand{flex-shrink:0}
 @media(max-width:650px){.writing-pdf-dialog{width:100vw;height:100dvh;border-radius:0}.writing-pdf-toolbar{padding:12px}.writing-pdf-actions{gap:10px}.writing-pdf-actions a{font-size:11px}}
 
 
-/* Hidden STARFALL dimensional vortex: layered rotating energy, dark depth and orbiting sparks. */
-.starfall-wormhole{
- position:fixed;width:58px;height:58px;z-index:30;pointer-events:none;border-radius:50%;
- transform:translate(-50%,-50%) scale(0);opacity:0;isolation:isolate;
- animation:wormhole-enter .65s cubic-bezier(.16,1,.3,1) forwards;
- background:
-  radial-gradient(circle at 50% 50%,#030310 0 15%,#0d0730 22%,transparent 35%),
-  repeating-conic-gradient(from 15deg,#2d0a72 0deg,#ab49ff 24deg,#21125c 49deg,#19c7ff 77deg,#090e43 106deg,#9a40ff 132deg,#19064a 165deg,#2d0a72 180deg);
- box-shadow:0 0 12px 3px #a33aff77,0 0 29px 7px #376aff44,0 0 55px #7435c52b;
- filter:drop-shadow(0 0 4px #9b65ff);
-}
-.starfall-wormhole::before{
- content:"";position:absolute;inset:3px;border-radius:50%;
- background:
-  radial-gradient(circle at center,#01020b 0 18%,#0b0a28 25%,transparent 41%),
-  repeating-conic-gradient(from 0deg,transparent 0 12deg,#c57affcc 18deg,transparent 29deg,#27bfffbb 46deg,transparent 61deg);
- box-shadow:inset 0 0 8px 2px #0a042d,inset 0 0 15px 4px #7537e6;
- animation:wormhole-spin 1.7s linear infinite reverse;
-}
-.starfall-wormhole::after{
- content:"";position:absolute;inset:-9px;border-radius:50%;
- background:
-  radial-gradient(circle at 8% 47%,#cdb0ff 0 1.5px,transparent 2.5px),
-  radial-gradient(circle at 89% 24%,#58dfff 0 1px,transparent 2px),
-  radial-gradient(circle at 76% 91%,#d1a2ff 0 1.3px,transparent 2.5px),
-  radial-gradient(circle at 26% 7%,#71baff 0 1px,transparent 2px);
- border:1px solid #8e5eff55;
- box-shadow:0 0 11px #8a4aff66,inset 0 0 10px #4a2fba55;
- animation:wormhole-orbit 3s linear infinite;
-}
-.starfall-wormhole.near{
- filter:brightness(1.45) drop-shadow(0 0 11px #d3a2ff);
- box-shadow:0 0 20px 7px #a64cffaa,0 0 48px 13px #287aff77;
-}
-.starfall-wormhole.near::before{animation-duration:.65s}
-.starfall-wormhole.near::after{animation-duration:1s}
-.starfall-wormhole.vanishing{animation:wormhole-leave .55s ease-in forwards}
+/* STARFALL subtle dark spiral, only placed in unobstructed negative space. */
+.starfall-wormhole{position:fixed;width:76px;height:76px;z-index:30;pointer-events:none;border-radius:50%;transform:translate(-50%,-50%) scale(0);opacity:0;animation:wormhole-enter .7s ease-out forwards;filter:drop-shadow(0 0 5px #50567955)}
+.starfall-wormhole canvas{display:block;width:100%;height:100%;border-radius:50%;opacity:.85}
+.starfall-wormhole.near{filter:brightness(1.5) drop-shadow(0 0 12px #7782bf99)}
+.starfall-wormhole.near canvas{opacity:1}
+.starfall-wormhole.vanishing{animation:wormhole-leave .65s ease-in forwards}
 @keyframes wormhole-enter{to{transform:translate(-50%,-50%) scale(1);opacity:1}}
 @keyframes wormhole-leave{from{transform:translate(-50%,-50%) scale(1);opacity:1}to{transform:translate(-50%,-50%) scale(0);opacity:0}}
-@keyframes wormhole-spin{to{transform:rotate(360deg)}}
-@keyframes wormhole-orbit{to{transform:rotate(360deg)}}
 .starfall-jump{position:fixed;inset:0;z-index:99999;background:#050912;overflow:hidden;opacity:0;animation:starfall-fade-in .7s ease-in-out forwards}
 @keyframes starfall-fade-in{from{opacity:0}to{opacity:1}}
 .starfall-jump canvas{display:block;width:100%;height:100%}
