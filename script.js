@@ -258,7 +258,7 @@ document.querySelectorAll('.feature-composition').forEach(card => {
     const stars=Array.from({length:240},()=>({angle:Math.random()*Math.PI*2,depth:.02+Math.random()*.98,speed:.6+Math.random()*1.5}));
     const begin=performance.now();
     function draw(now){
-      const elapsed=now-begin,progress=Math.min(1,elapsed/4200),dpr=Math.min(devicePixelRatio||1,2);
+      const elapsed=Math.max(0,now-begin-450),progress=Math.min(1,elapsed/4200),dpr=Math.min(devicePixelRatio||1,2);
       if(canvas.width!==Math.round(innerWidth*dpr)||canvas.height!==Math.round(innerHeight*dpr)){canvas.width=Math.round(innerWidth*dpr);canvas.height=Math.round(innerHeight*dpr);}
       ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle='#050912';ctx.fillRect(0,0,innerWidth,innerHeight);
       const cx=innerWidth/2,cy=innerHeight/2,max=Math.hypot(cx,cy)*1.4;
