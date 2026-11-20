@@ -238,12 +238,12 @@ document.querySelectorAll('.feature-composition').forEach(card => {
   function schedule(ms){clearTimers();if(active&&!jumping)spawnTimer=setTimeout(spawn,ms);}
   function openSpace(){
     // Test the whole portal footprint, not just its center. Reject text, artwork and controls.
-    const radius=43, samples=[[0,0],[-radius,0],[radius,0],[0,-radius],[0,radius],[-30,-30],[30,-30],[-30,30],[30,30]];
+    const radius=61, samples=[[0,0],[-radius,0],[radius,0],[0,-radius],[0,radius],[-46,-46],[46,-46],[-46,46],[46,46],[-62,-24],[62,24]];
     const blocked='a,button,input,textarea,select,img,video,iframe,canvas,svg,h1,h2,h3,h4,h5,h6,p,li,blockquote,.cover,.shot,.gallery,.project-header,.feature-composition,.writing-sample-card,.card,.project-card,nav,header,footer';
     const spots=[];
     for(let k=0;k<110;k++){
-      const x=65+Math.random()*Math.max(1,innerWidth-130);
-      const y=Math.max(105,innerHeight*.13)+Math.random()*Math.max(1,innerHeight-Math.max(105,innerHeight*.13)-70);
+      const x=85+Math.random()*Math.max(1,innerWidth-170);
+      const y=Math.max(125,innerHeight*.15)+Math.random()*Math.max(1,innerHeight-Math.max(125,innerHeight*.15)-95);
       let valid=true;
       for(const [dx,dy] of samples){
         const el=document.elementFromPoint(x+dx,y+dy);
@@ -266,33 +266,77 @@ document.querySelectorAll('.feature-composition').forEach(card => {
     if(!spot){schedule(2500);return;} // Never cover content just to force a spawn.
     const p=document.createElement('div');p.className='starfall-wormhole';p.setAttribute('aria-hidden','true');
     p.style.left=spot.x+'px';p.style.top=spot.y+'px';
-    const canvas=document.createElement('canvas');canvas.width=160;canvas.height=160;p.appendChild(canvas);
+    const canvas=document.createElement('canvas');canvas.width=240;canvas.height=240;p.appendChild(canvas);
     document.body.appendChild(p);portal=p;
     const ctx=canvas.getContext('2d'),birth=performance.now();
+    const particles=Array.from({length:95},(_,i)=>({
+      radius:17+Math.random()*87,angle:Math.random()*Math.PI*2,
+      size:.35+Math.random()*.85,phase:Math.random()*Math.PI*2,
+      tint:i%4
+    }));
     function swirl(now){
-      if(portal!==p)return;
-      const t=(now-birth)/1000;
-      ctx.clearRect(0,0,160,160);
-      const center=80;
-      // Fine spiral strands taper into a black throat, inspired by a gravitational vortex.
-      for(let arm=0;arm<7;arm++){
-        for(let strand=0;strand<3;strand++){
+      if(portal!==p||document.hidden)return;
+      const t=(now-birth)/1000, cx=120,cy=120;
+      ctx.clearRect(0,0,240,240);
+      ctx.save();
+      ctx.translate(cx,cy);
+      ctx.rotate(-.46); // A tilted gateway rather than a face-on disc.
+      ctx.scale(1,.69); // Foreshortened opening gives the vortex its perspective.
+      // Deep outer atmosphere. Keep the edges transparent against the portfolio.
+      const haze=ctx.createRadialGradient(0,0,12,0,0,113);
+      haze.addColorStop(0,'rgba(3,4,17,.98)');
+      haze.addColorStop(.28,'rgba(14,9,45,.91)');
+      haze.addColorStop(.49,'rgba(31,21,82,.64)');
+      haze.addColorStop(.72,'rgba(32,38,90,.25)');
+      haze.addColorStop(1,'rgba(20,20,65,0)');
+      ctx.fillStyle=haze;ctx.beginPath();ctx.arc(0,0,113,0,Math.PI*2);ctx.fill();
+      // Layered spiral arms: hundreds of short translucent filaments produce
+      // turbulent nebula-like texture rather than a handful of geometric lines.
+      const palette=[[124,103,225],[64,168,222],[185,106,187],[118,148,211],[211,164,203]];
+      for(let arm=0;arm<8;arm++){
+        for(let filament=0;filament<11;filament++){
+          const color=palette[(arm+Math.floor(filament/3))%palette.length];
+          const offset=(filament-5)*.052;
           ctx.beginPath();
-          for(let i=0;i<=90;i++){
-            const u=i/90,r=6+u*64;
-            const angle=arm*Math.PI*2/7+strand*.13+u*5.6-t*.35;
-            const x=center+Math.cos(angle)*r,y=center+Math.sin(angle)*r*.77;
-            if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+          for(let k=0;k<=75;k++){
+            const u=k/75,r=10+u*95;
+            const theta=arm*Math.PI/4+offset+u*4.8-t*.22+
+              Math.sin(u*17+arm*2.3+filament*.7+t*.32)*(.025+.045*u);
+            const ripple=1+Math.sin(u*26+filament*1.7+t*.45)*.018;
+            const x=Math.cos(theta)*r*ripple,y=Math.sin(theta)*r*ripple;
+            if(k===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
           }
-          const alpha=.10+(strand===0?.16:.045);
-          ctx.strokeStyle=strand===0?'rgba(170,176,210,'+alpha+')':'rgba(103,110,164,'+alpha+')';
-          ctx.lineWidth=strand===0?1.35:.65;ctx.stroke();
+          const alpha=(filament%3===0?.18:.07)*(1-Math.abs(filament-5)/18);
+          ctx.strokeStyle='rgba('+color.join(',')+','+alpha+')';
+          ctx.lineWidth=filament%4===0?2.6:.85;
+          ctx.stroke();
         }
       }
-      const shadow=ctx.createRadialGradient(80,80,4,80,80,67);
-      shadow.addColorStop(0,'#02030a');shadow.addColorStop(.15,'rgba(3,4,13,.98)');
-      shadow.addColorStop(.38,'rgba(5,7,20,.35)');shadow.addColorStop(.85,'rgba(6,8,17,.08)');shadow.addColorStop(1,'rgba(6,8,17,0)');
-      ctx.fillStyle=shadow;ctx.beginPath();ctx.arc(80,80,68,0,Math.PI*2);ctx.fill();
+      // A narrow, asymmetrically illuminated inner rim adds perceived depth.
+      ctx.save();ctx.rotate(t*.12);
+      const rim=ctx.createLinearGradient(-38,-35,45,35);
+      rim.addColorStop(0,'rgba(97,187,238,.36)');
+      rim.addColorStop(.45,'rgba(165,104,230,.12)');
+      rim.addColorStop(1,'rgba(210,124,187,.32)');
+      ctx.strokeStyle=rim;ctx.lineWidth=5;
+      ctx.beginPath();ctx.ellipse(0,0,22,17,.22,0,Math.PI*2);ctx.stroke();
+      ctx.restore();
+      // The dark vanishing point is never a bright flat circle.
+      const throat=ctx.createRadialGradient(-2,-2,1,0,0,29);
+      throat.addColorStop(0,'rgba(0,1,8,1)');
+      throat.addColorStop(.56,'rgba(2,3,15,.99)');
+      throat.addColorStop(.85,'rgba(7,7,28,.65)');
+      throat.addColorStop(1,'rgba(12,10,39,0)');
+      ctx.fillStyle=throat;ctx.beginPath();ctx.arc(0,0,29,0,Math.PI*2);ctx.fill();
+      for(const star of particles){
+        const theta=star.angle-t*(.12+42/(star.radius+25));
+        const r=star.radius*(.94+.06*Math.sin(t*.45+star.phase));
+        const x=Math.cos(theta)*r,y=Math.sin(theta)*r;
+        const alpha=(.12+.2*(.5+.5*Math.sin(t*.8+star.phase)))*(1-r/140);
+        ctx.fillStyle=star.tint===0?'rgba(148,218,247,'+alpha+')':'rgba(206,176,247,'+alpha+')';
+        ctx.beginPath();ctx.arc(x,y,star.size,0,Math.PI*2);ctx.fill();
+      }
+      ctx.restore();
       requestAnimationFrame(swirl);
     }
     requestAnimationFrame(swirl);
