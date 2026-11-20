@@ -833,7 +833,8 @@ header .container>.brand{flex-shrink:0}
 @keyframes wormhole-leave{from{transform:translate(-50%,-50%) scale(1);opacity:1}to{transform:translate(-50%,-50%) scale(0);opacity:0}}
 @keyframes wormhole-spin{to{transform:rotate(360deg)}}
 @keyframes wormhole-orbit{to{transform:rotate(360deg)}}
-.starfall-jump{position:fixed;inset:0;z-index:99999;background:#050912;overflow:hidden}
+.starfall-jump{position:fixed;inset:0;z-index:99999;background:#050912;overflow:hidden;opacity:0;animation:starfall-fade-in .7s ease-in-out forwards}
+@keyframes starfall-fade-in{from{opacity:0}to{opacity:1}}
 .starfall-jump canvas{display:block;width:100%;height:100%}
 .starfall-jump-message{position:absolute;left:0;right:0;bottom:12%;text-align:center;font:700 13px 'Space Grotesk',sans-serif;letter-spacing:.38em;color:#e3efff;text-shadow:0 0 20px #8cb9ff}
 .starfall-skip{position:absolute;top:24px;right:28px;border:1px solid #7187a5;color:white;background:#0c1522bb;padding:9px 15px;border-radius:4px;cursor:pointer}
