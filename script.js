@@ -223,8 +223,10 @@ document.querySelectorAll('.feature-composition').forEach(card => {
 
 /* STARFALL hidden jump: project-page exploration easter egg. */
 (()=>{
-  const path=location.pathname.split('/').pop().toLowerCase();
-  if(!path || path==='index.html' || path==='index-fr.html' || path==='starfall.html' || !path.endsWith('.html'))return;
+  // Cloudflare Pages serves clean URLs such as /bioshock as well as /bioshock.html.
+  const path=location.pathname.split('/').filter(Boolean).pop()?.toLowerCase()||'';
+  const slug=path.replace(/\.html$/,'');
+  if(!slug || slug==='index' || slug==='index-fr' || slug==='starfall' || path.includes('.pdf'))return;
   if(!matchMedia('(pointer:fine)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   const toggle=document.querySelector('.cursor-ship-toggle');
   if(!toggle)return;
