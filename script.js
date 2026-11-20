@@ -236,21 +236,72 @@ document.querySelectorAll('.feature-composition').forEach(card => {
   function removePortal(){if(portal){portal.remove();portal=null;}}
   function stop(){active=false;clearTimers();removePortal();}
   function schedule(ms){clearTimers();if(active&&!jumping)spawnTimer=setTimeout(spawn,ms);}
+  function openSpace(){
+    // Test the whole portal footprint, not just its center. Reject text, artwork and controls.
+    const radius=43, samples=[[0,0],[-radius,0],[radius,0],[0,-radius],[0,radius],[-30,-30],[30,-30],[-30,30],[30,30]];
+    const blocked='a,button,input,textarea,select,img,video,iframe,canvas,svg,h1,h2,h3,h4,h5,h6,p,li,blockquote,.cover,.shot,.gallery,.project-header,.feature-composition,.writing-sample-card,.card,.project-card,nav,header,footer';
+    const spots=[];
+    for(let k=0;k<110;k++){
+      const x=65+Math.random()*Math.max(1,innerWidth-130);
+      const y=Math.max(105,innerHeight*.13)+Math.random()*Math.max(1,innerHeight-Math.max(105,innerHeight*.13)-70);
+      let valid=true;
+      for(const [dx,dy] of samples){
+        const el=document.elementFromPoint(x+dx,y+dy);
+        if(!el || el.closest(blocked)){valid=false;break;}
+        const range=document.caretRangeFromPoint?.(x+dx,y+dy);
+        if(range && range.startContainer.nodeType===Node.TEXT_NODE && range.startContainer.textContent.trim()){
+          const rect=range.getBoundingClientRect();
+          if(rect.width && rect.height && Math.abs(rect.left-(x+dx))<18 && Math.abs(rect.top-(y+dy))<20){valid=false;break;}
+        }
+      }
+      if(valid)spots.push({x,y});
+      if(spots.length>=12)break;
+    }
+    return spots.length?spots[Math.floor(Math.random()*spots.length)]:null;
+  }
   function spawn(){
     if(!active||!enabled()||document.hidden||jumping)return;
     removePortal();
+    const spot=openSpace();
+    if(!spot){schedule(2500);return;} // Never cover content just to force a spawn.
     const p=document.createElement('div');p.className='starfall-wormhole';p.setAttribute('aria-hidden','true');
-    const margin=80,top=Math.max(110,innerHeight*.17);
-    const left=margin+Math.random()*Math.max(1,innerWidth-margin*2);
-    const y=top+Math.random()*Math.max(1,innerHeight-top-margin);
-    p.style.left=Math.min(innerWidth-55,left)+'px';p.style.top=Math.min(innerHeight-55,y)+'px';
+    p.style.left=spot.x+'px';p.style.top=spot.y+'px';
+    const canvas=document.createElement('canvas');canvas.width=160;canvas.height=160;p.appendChild(canvas);
     document.body.appendChild(p);portal=p;
-    hideTimer=setTimeout(()=>{p.classList.add('vanishing');setTimeout(()=>{if(portal===p){removePortal();schedule(3000+Math.random()*3000);}},550);},8000);
+    const ctx=canvas.getContext('2d'),birth=performance.now();
+    function swirl(now){
+      if(portal!==p)return;
+      const t=(now-birth)/1000;
+      ctx.clearRect(0,0,160,160);
+      const center=80;
+      // Fine spiral strands taper into a black throat, inspired by a gravitational vortex.
+      for(let arm=0;arm<7;arm++){
+        for(let strand=0;strand<3;strand++){
+          ctx.beginPath();
+          for(let i=0;i<=90;i++){
+            const u=i/90,r=6+u*64;
+            const angle=arm*Math.PI*2/7+strand*.13+u*5.6-t*.35;
+            const x=center+Math.cos(angle)*r,y=center+Math.sin(angle)*r*.77;
+            if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+          }
+          const alpha=.10+(strand===0?.16:.045);
+          ctx.strokeStyle=strand===0?'rgba(170,176,210,'+alpha+')':'rgba(103,110,164,'+alpha+')';
+          ctx.lineWidth=strand===0?1.35:.65;ctx.stroke();
+        }
+      }
+      const shadow=ctx.createRadialGradient(80,80,4,80,80,67);
+      shadow.addColorStop(0,'#02030a');shadow.addColorStop(.15,'rgba(3,4,13,.98)');
+      shadow.addColorStop(.38,'rgba(5,7,20,.35)');shadow.addColorStop(.85,'rgba(6,8,17,.08)');shadow.addColorStop(1,'rgba(6,8,17,0)');
+      ctx.fillStyle=shadow;ctx.beginPath();ctx.arc(80,80,68,0,Math.PI*2);ctx.fill();
+      requestAnimationFrame(swirl);
+    }
+    requestAnimationFrame(swirl);
+    hideTimer=setTimeout(()=>{p.classList.add('vanishing');setTimeout(()=>{if(portal===p){removePortal();schedule(3000+Math.random()*3000);}},650);},8000);
   }
   function start(){if(active||jumping)return;active=true;schedule(5000);}
   function jump(){
     if(jumping)return;jumping=true;stop();
-    const overlay=document.createElement('div');overlay.className='starfall-jump';overlay.innerHTML='<canvas aria-hidden="true"></canvas><div class="starfall-jump-message">HYPERSPACE JUMP</div><button type="button" class="starfall-skip">Skip →</button>';
+    const overlay=document.createElement('div');overlay.className='starfall-jump';overlay.innerHTML='<canvas aria-hidden="true"></canvas><button type="button" class="starfall-skip">Skip →</button>';
     document.body.appendChild(overlay);
     const canvas=overlay.querySelector('canvas'),ctx=canvas.getContext('2d');
     const finish=()=>location.assign('starfall.html');
