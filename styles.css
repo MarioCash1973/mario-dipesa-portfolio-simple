@@ -793,9 +793,9 @@ header .container>.brand{flex-shrink:0}
 
 
 /* STARFALL subtle dark spiral, only placed in unobstructed negative space. */
-.starfall-wormhole{position:fixed;width:76px;height:76px;z-index:30;pointer-events:none;border-radius:50%;transform:translate(-50%,-50%) scale(0);opacity:0;animation:wormhole-enter .7s ease-out forwards;filter:drop-shadow(0 0 5px #50567955)}
-.starfall-wormhole canvas{display:block;width:100%;height:100%;border-radius:50%;opacity:.85}
-.starfall-wormhole.near{filter:brightness(1.5) drop-shadow(0 0 12px #7782bf99)}
+.starfall-wormhole{position:fixed;width:108px;height:108px;z-index:30;pointer-events:none;border-radius:50%;transform:translate(-50%,-50%) scale(0);opacity:0;animation:wormhole-enter .85s ease-out forwards;filter:drop-shadow(0 0 8px #5853a144)}
+.starfall-wormhole canvas{display:block;width:100%;height:100%;border-radius:50%;opacity:.93}
+.starfall-wormhole.near{filter:brightness(1.25) drop-shadow(0 0 13px #8277d488)}
 .starfall-wormhole.near canvas{opacity:1}
 .starfall-wormhole.vanishing{animation:wormhole-leave .65s ease-in forwards}
 @keyframes wormhole-enter{to{transform:translate(-50%,-50%) scale(1);opacity:1}}
