@@ -105,9 +105,9 @@ document.querySelectorAll('.feature-composition').forEach(card => {
   const starMarkup=dot.innerHTML;
   // A quiet easter egg beside the site wordmark, on every page.
   const shipMarkup='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 1.5 21.4 11 25.5 13.3 29 26 20 22.8 16 29 12 22.8 3 26 6.5 13.3 10.6 11Z" fill="currentColor"/><path d="M16 8 18.3 16 16 20 13.7 16Z" fill="#11161c" opacity=".75"/></svg>';
-  // Remember the visitor's choice across project pages and return visits.
+  // Start fresh visits with the star, while keeping the ship across pages in this tab.
   let shipMode=false;
-  try{shipMode=localStorage.getItem('portfolio-cursor-mode')==='ship';}catch(e){}
+  try{shipMode=sessionStorage.getItem('portfolio-cursor-mode')==='ship';}catch(e){}
   let shipHeading=0; // degrees; ship SVG points upward at zero
   const brand=document.querySelector('header .brand');
   if(brand){
@@ -124,7 +124,7 @@ document.querySelectorAll('.feature-composition').forEach(card => {
     brand.insertAdjacentElement('afterend',toggle);
     toggle.addEventListener('click',()=>{
       shipMode=!shipMode;
-      try{localStorage.setItem('portfolio-cursor-mode',shipMode?'ship':'star');}catch(e){}
+      try{sessionStorage.setItem('portfolio-cursor-mode',shipMode?'ship':'star');}catch(e){}
       toggle.setAttribute('aria-pressed',String(shipMode));
       toggle.innerHTML=shipMode?starMarkup:shipMarkup;
       toggle.setAttribute('aria-label',shipMode?'Switch to star cursor':'Switch to spaceship cursor');
