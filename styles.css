@@ -790,18 +790,3 @@ header .container>.brand{flex-shrink:0}
 .writing-pdf-dialog iframe{display:block;flex:1;min-height:0;width:100%;border:0;background:#e8e8e8}
 .writing-pdf-fallback{margin:0;padding:7px 16px;color:#adb3bb;font-size:11px;text-align:center}
 @media(max-width:650px){.writing-pdf-dialog{width:100vw;height:100dvh;border-radius:0}.writing-pdf-toolbar{padding:12px}.writing-pdf-actions{gap:10px}.writing-pdf-actions a{font-size:11px}}
-
-
-/* STARFALL subtle dark spiral, only placed in unobstructed negative space. */
-.starfall-wormhole{position:fixed;width:108px;height:108px;z-index:30;pointer-events:none;border-radius:50%;transform:translate(-50%,-50%) scale(0);opacity:0;animation:wormhole-enter .85s ease-out forwards;filter:drop-shadow(0 0 8px #5853a144)}
-.starfall-wormhole canvas{display:block;width:100%;height:100%;border-radius:50%;opacity:.93}
-.starfall-wormhole.near{filter:brightness(1.25) drop-shadow(0 0 13px #8277d488)}
-.starfall-wormhole.near canvas{opacity:1}
-.starfall-wormhole.vanishing{animation:wormhole-leave .65s ease-in forwards}
-@keyframes wormhole-enter{to{transform:translate(-50%,-50%) scale(1);opacity:1}}
-@keyframes wormhole-leave{from{transform:translate(-50%,-50%) scale(1);opacity:1}to{transform:translate(-50%,-50%) scale(0);opacity:0}}
-.starfall-jump{position:fixed;inset:0;z-index:99999;background:#050912;overflow:hidden;opacity:0;animation:starfall-fade-in .7s ease-in-out forwards}
-@keyframes starfall-fade-in{from{opacity:0}to{opacity:1}}
-.starfall-jump canvas{display:block;width:100%;height:100%}
-.starfall-jump-message{position:absolute;left:0;right:0;bottom:12%;text-align:center;font:700 13px 'Space Grotesk',sans-serif;letter-spacing:.38em;color:#e3efff;text-shadow:0 0 20px #8cb9ff}
-.starfall-skip{position:absolute;top:24px;right:28px;border:1px solid #7187a5;color:white;background:#0c1522bb;padding:9px 15px;border-radius:4px;cursor:pointer}
