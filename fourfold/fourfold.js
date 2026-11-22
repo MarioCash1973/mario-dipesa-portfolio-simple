@@ -2,6 +2,10 @@
 const N=22,S=30,C=10,LOCK=1500,MAX_RESETS=8,MAX_LIVES=5;
 const shapes=[[[0,0],[1,0],[2,0],[3,0]],[[0,0],[1,0],[0,1],[1,1]],[[0,0],[1,0],[2,0],[1,1]],[[0,0],[0,1],[1,1],[2,1]],[[2,0],[0,1],[1,1],[2,1]],[[1,0],[2,0],[0,1],[1,1]],[[0,0],[1,0],[1,1],[2,1]]];
 const colors=['#36c5f0','#f6c65b','#a78bfa','#f78c55','#6fa8ff','#62d9a0','#f472b6'];
+// Fixed palette for the ten concentric rings, from the core outward.
+const ringColors=['#ff6b6b','#ffad5a','#ffe066','#9fe870','#41d9ae','#45c9f5','#718cff','#b38aff','#f37dd0','#d6e6f5'];
+const ringAt=(x,y)=>Math.max(Math.abs(x-C),Math.abs(x-(C+1)),Math.abs(y-C),Math.abs(y-(C+1)));
+
 const $=id=>document.getElementById(id),ctx=$('board').getContext('2d');
 let grid,active=null,dir=0,lastDir=-1,score=0,rings=0,lives=3,playing=false,paused=false,over=false,acc=0,prev=0,interval=650;
 let grounded=false,lockElapsed=0,resets=0,particles=[],shake=0,flash=0;
@@ -74,7 +78,7 @@ function clearRings(){
 }
 function lock(){
  if(!active||!playing)return;
- for(const [dx,dy] of active.cells)grid[active.y+dy][active.x+dx]=active.color;
+ for(const [dx,dy] of active.cells)grid[active.y+dy][active.x+dx]=ringColors[ringAt(active.x+dx,active.y+dy)-1];
  score+=4;clearRings();spawn();update();
 }
 function burst(){
@@ -136,8 +140,8 @@ function draw(){
  }
  for(let r=1;r<=C;r++){
   const a=(C-r)*S,b=(C+2+r)*S;
-  ctx.strokeStyle=r===1?'rgba(100,210,255,.45)':'rgba(110,145,215,.10)';
-  ctx.lineWidth=r===1?2:1;ctx.strokeRect(a+.5,a+.5,b-a-1,b-a-1);
+  ctx.strokeStyle=ringColors[r-1];
+  ctx.globalAlpha=.36;ctx.lineWidth=2;ctx.strokeRect(a+1,a+1,b-a-2,b-a-2);ctx.globalAlpha=1;
  }
  if(active)for(const [dx,dy] of active.cells){
   if(grounded&&playing&&!paused)ctx.globalAlpha=.72+.28*(.5+.5*Math.sin(performance.now()*.014));
