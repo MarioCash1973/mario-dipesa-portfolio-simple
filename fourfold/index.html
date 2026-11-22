@@ -1,9 +1,13 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fourfold | Prototype</title><style>
 *{box-sizing:border-box}body{margin:0;background:#080d1b;color:#eaf0ff;font:15px system-ui,sans-serif}#app{min-height:100dvh;display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px}h1{font-size:20px;margin:0;letter-spacing:.14em}#hud{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.stat{background:#141e33;border:1px solid #35445e;border-radius:9px;padding:6px 14px;text-align:center;min-width:80px}.stat b{display:block;font-size:19px}.stat small{color:#aab9d4}canvas{display:block;width:min(88vw,calc(100dvh - 235px),700px);aspect-ratio:1;border-radius:9px;background:#0b1020}#controls{display:flex;gap:7px;justify-content:center;flex-wrap:wrap}button{background:#1b2945;border:1px solid #4c6080;color:#eaf0ff;border-radius:7px;padding:9px 12px;cursor:pointer;font:600 13px system-ui}button:hover{background:#293b60}#status{text-align:center;min-height:20px;color:#b8c7e0}#help{text-align:center;color:#aab9d4;font-size:12px}#app:fullscreen{background:#080d1b;overflow:auto}#app:fullscreen canvas{width:min(calc(100dvh - 205px),calc(100vw - 24px));max-width:none}@media(max-height:650px){#app{gap:5px;padding:5px}canvas{width:min(85vw,calc(100dvh - 160px))}#help{display:none}#app:fullscreen canvas{width:min(calc(100dvh - 150px),calc(100vw - 15px))}}
-</style></head><body><main id="app"><h1>FOURFOLD</h1><div id="hud"><div class="stat"><b id="score">0</b><small>Score</small></div><div class="stat"><b id="rings">0</b><small>Rings</small></div><div class="stat"><b id="lives" style="color:#fb7185">♥ ♥ ♥</b><small>Lives (max 5)</small></div><div class="stat"><b id="side">TOP</b><small>Entry</small></div><div class="stat"><b id="timer">—</b><small>Lock</small></div></div><canvas id="board" width="660" height="660"></canvas><div id="status">Press Start to play</div><div id="controls"><button id="start">Start / Restart</button><button id="pause">Pause</button><button id="rotate">↻ Rotate</button><button id="drop">⇣ Hard drop</button><button id="fullscreen">⛶ Fullscreen</button></div><div id="help">Arrow keys move / accelerate · Z counterclockwise · X clockwise · Space hard drop · P pause · F fullscreen · Esc exit</div></main><script>(()=>{'use strict';
+</style></head><body><main id="app"><h1>FOURFOLD</h1><div id="hud"><div class="stat"><b id="score">0</b><small>Score</small></div><div class="stat"><b id="rings">0</b><small>Rings</small></div><div class="stat"><b id="lives" style="color:#fb7185">♥ ♥ ♥</b><small>Lives (max 5)</small></div><div class="stat"><b id="side">TOP</b><small>Entry</small></div><div class="stat"><b id="timer">—</b><small>Lock</small></div></div><canvas id="board" width="660" height="660"></canvas><div id="status">Press Start to play</div><div id="controls"><button id="start">Start / Restart</button><button id="pause">Pause</button><button id="rotate">↻ Rotate</button><button id="drop">⇣ Hard drop</button><button id="fullscreen">⛶ Fullscreen</button></div><div id="help">Settled blocks take their ring color · Arrow keys move / accelerate · Z counterclockwise · X clockwise · Space hard drop · P pause · F fullscreen · Esc exit</div></main><script>(()=>{'use strict';
 const N=22,S=30,C=10,LOCK=1500,MAX_RESETS=8,MAX_LIVES=5;
 const shapes=[[[0,0],[1,0],[2,0],[3,0]],[[0,0],[1,0],[0,1],[1,1]],[[0,0],[1,0],[2,0],[1,1]],[[0,0],[0,1],[1,1],[2,1]],[[2,0],[0,1],[1,1],[2,1]],[[1,0],[2,0],[0,1],[1,1]],[[0,0],[1,0],[1,1],[2,1]]];
 const colors=['#36c5f0','#f6c65b','#a78bfa','#f78c55','#6fa8ff','#62d9a0','#f472b6'];
+// Fixed palette for the ten concentric rings, from the core outward.
+const ringColors=['#ff6b6b','#ffad5a','#ffe066','#9fe870','#41d9ae','#45c9f5','#718cff','#b38aff','#f37dd0','#d6e6f5'];
+const ringAt=(x,y)=>Math.max(Math.abs(x-C),Math.abs(x-(C+1)),Math.abs(y-C),Math.abs(y-(C+1)));
+
 const $=id=>document.getElementById(id),ctx=$('board').getContext('2d');
 let grid,active=null,dir=0,lastDir=-1,score=0,rings=0,lives=3,playing=false,paused=false,over=false,acc=0,prev=0,interval=650;
 let grounded=false,lockElapsed=0,resets=0,particles=[],shake=0,flash=0;
@@ -76,7 +80,7 @@ function clearRings(){
 }
 function lock(){
  if(!active||!playing)return;
- for(const [dx,dy] of active.cells)grid[active.y+dy][active.x+dx]=active.color;
+ for(const [dx,dy] of active.cells)grid[active.y+dy][active.x+dx]=ringColors[ringAt(active.x+dx,active.y+dy)-1];
  score+=4;clearRings();spawn();update();
 }
 function burst(){
@@ -138,8 +142,8 @@ function draw(){
  }
  for(let r=1;r<=C;r++){
   const a=(C-r)*S,b=(C+2+r)*S;
-  ctx.strokeStyle=r===1?'rgba(100,210,255,.45)':'rgba(110,145,215,.10)';
-  ctx.lineWidth=r===1?2:1;ctx.strokeRect(a+.5,a+.5,b-a-1,b-a-1);
+  ctx.strokeStyle=ringColors[r-1];
+  ctx.globalAlpha=.36;ctx.lineWidth=2;ctx.strokeRect(a+1,a+1,b-a-2,b-a-2);ctx.globalAlpha=1;
  }
  if(active)for(const [dx,dy] of active.cells){
   if(grounded&&playing&&!paused)ctx.globalAlpha=.72+.28*(.5+.5*Math.sin(performance.now()*.014));
