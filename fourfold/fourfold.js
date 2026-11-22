@@ -57,9 +57,9 @@ function directional(dx,dy){
  if(dot>0){step();return}
  move(dx,dy,true);
 }
-function rotate(){
+function rotate(clockwise=true){
  if(!playing||paused||over)return;
- const cells=rotated(active.cells),minX=Math.min(...cells.map(p=>p[0])),minY=Math.min(...cells.map(p=>p[1]));
+ const cells=clockwise?rotated(active.cells):rotated(rotated(rotated(active.cells))),minX=Math.min(...cells.map(p=>p[0])),minY=Math.min(...cells.map(p=>p[1]));
  const norm=cells.map(([x,y])=>[x-minX,y-minY]);
  for(const [ox,oy] of [[0,0],[-1,0],[1,0],[0,-1],[0,1]]){
   const p={...active,x:active.x+ox,y:active.y+oy,cells:norm};
@@ -178,7 +178,8 @@ document.addEventListener('keydown',e=>{
  if(key==='arrowleft')directional(-1,0);
  if(key==='arrowright')directional(1,0);
  if(key===' ')hardDrop();
- if(key==='z'||key==='x')rotate();
+ if(key==='z')rotate(false);
+ if(key==='x')rotate(true);
  if(key==='p'&&!e.repeat)$('pause').click();
 });
 grid=Array.from({length:N},()=>Array(N).fill(null));draw();requestAnimationFrame(tick);
