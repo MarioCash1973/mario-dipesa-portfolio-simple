@@ -9,6 +9,7 @@ const ringAt=(x,y)=>Math.max(Math.abs(x-C),Math.abs(x-(C+1)),Math.abs(y-C),Math.
 const $=id=>document.getElementById(id),ctx=$('board').getContext('2d');
 let grid,active=null,dir=0,lastDir=-1,score=0,rings=0,lives=3,playing=false,paused=false,over=false,acc=0,prev=0,interval=650;
 let grounded=false,lockElapsed=0,resets=0,particles=[],shake=0,flash=0;
+let charges=0,chargeElapsed=0,chargeDuration=60000,detonations=0,corePulse=0;
 const vec=()=>[[0,1],[-1,0],[0,-1],[1,0]][dir];
 const core=(x,y)=>x>=C&&x<C+2&&y>=C&&y<C+2;
 const inside=(x,y)=>x>=0&&x<N&&y>=0&&y<N;
@@ -26,6 +27,9 @@ function update(){
  $('score').textContent=score;$('rings').textContent=rings;
  $('lives').textContent='♥ '.repeat(lives)+'♡ '.repeat(MAX_LIVES-lives);
  $('timer').textContent=grounded&&playing?(Math.max(0,LOCK-lockElapsed)/1000).toFixed(1)+'s':'—';
+ $('charge').textContent=charges+'/4';
+ $('chargeTime').textContent=Math.ceil(Math.max(0,chargeDuration-chargeElapsed)/1000)+'s';
+ $('detonate').disabled=!playing||paused||charges===0;
 }
 function spawn(){
  const choices=[0,1,2,3].filter(d=>d!==lastDir);
@@ -75,6 +79,25 @@ function clearRings(){
  let count=0;
  for(let r=1;r<=C;r++){const cells=ringCells(r);if(cells.every(([x,y])=>grid[y][x])){cells.forEach(([x,y])=>grid[y][x]=null);count++}}
  if(count){const gained=Math.min(count,MAX_LIVES-lives);rings+=count;score+=count*100*(count+1);lives+=gained;interval=Math.max(170,650-rings*12);$('status').textContent='RING CLEARED! +'+gained+' '+(gained===1?'life':'lives')+' (max 5)'}
+}
+function detonate(overload=false){
+ if(!playing||paused||charges===0)return;
+ const used=charges;
+ let destroyed=0;
+ for(let r=1;r<=used;r++)for(const [x,y] of ringCells(r)){
+  if(!grid[y][x])continue;
+  const color=grid[y][x];grid[y][x]=null;destroyed++;
+  for(let i=0;i<5;i++){
+   const a=Math.random()*Math.PI*2,v=1+Math.random()*4;
+   particles.push({x:(x+.5)*S,y:(y+.5)*S,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:1,color,size:2+Math.random()*2});
+  }
+ }
+ charges=0;chargeElapsed=0;chargeDuration+=10000;detonations++;corePulse=1;shake=overload?16:9;flash=overload?.48:.23;
+ // A detonation destroys blocks, not completed rings: no bonus lives.
+ score+=destroyed*2;
+ $('status').textContent=(overload?'CORE OVERLOAD! ':'CORE DETONATED! ')+used+' inner '+(used===1?'ring':'rings')+' cleared · '+Math.round(chargeDuration/1000)+'s per charge';
+ if(active)refreshContact(false,false);
+ update();
 }
 function lock(){
  if(!active||!playing)return;
@@ -147,7 +170,16 @@ function draw(){
   if(grounded&&playing&&!paused)ctx.globalAlpha=.72+.28*(.5+.5*Math.sin(performance.now()*.014));
   block(active.x+dx,active.y+dy,active.color);ctx.globalAlpha=1;
  }
- ctx.fillStyle='#b7cce5';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText('CORE',11*S,11*S+4);
+ // Four nested red squares fill from the center outward as charge builds.
+ const mid=(C+1)*S;
+ for(let i=3;i>=0;i--){
+  const size=12+i*12;
+  ctx.fillStyle=i<charges?'rgba(255,55,67,'+(.8+corePulse*.2)+')':'rgba(115,35,48,.20)';
+  ctx.fillRect(mid-size/2,mid-size/2,size,size);
+  ctx.strokeStyle=i<charges?'#ffd1d1':'rgba(220,110,120,.30)';ctx.lineWidth=1.5;
+  ctx.strokeRect(mid-size/2+.5,mid-size/2+.5,size-1,size-1);
+ }
+ if(charges===4){ctx.strokeStyle='rgba(255,75,75,'+(.5+.5*Math.sin(performance.now()*.013))+')';ctx.lineWidth=4;ctx.strokeRect(C*S+1,C*S+1,S*2-2,S*2-2)}
  if(grounded&&playing&&!paused){
   const pct=Math.max(0,1-lockElapsed/LOCK);
   ctx.strokeStyle=pct<.3?'#fb7185':'#6ee7f9';ctx.lineWidth=4;
@@ -167,7 +199,7 @@ function draw(){
 function start(){
  grid=Array.from({length:N},()=>Array(N).fill(null));
  active=null;lastDir=-1;score=0;rings=0;lives=3;interval=650;acc=0;over=false;paused=false;playing=true;
- particles=[];shake=0;flash=0;spawn();$('status').textContent='Complete square rings around the core';draw();
+ particles=[];shake=0;flash=0;charges=0;chargeElapsed=0;chargeDuration=60000;detonations=0;corePulse=0;spawn();$('status').textContent='Complete square rings around the core';draw();
 }
 function tick(t){
  if(prev){
@@ -176,11 +208,15 @@ function tick(t){
    acc+=dt;
    if(acc>=interval){acc-=interval;step()}
    if(grounded&&playing){lockElapsed+=dt;if(lockElapsed>=LOCK)lock()}
+   if(playing){
+    chargeElapsed+=dt;
+    if(chargeElapsed>=chargeDuration){chargeElapsed-=chargeDuration;if(charges===4)detonate(true);else charges++}
+   }
   }
   if(!paused){
    particles=particles.filter(p=>p.life>0);
    for(const p of particles){p.x+=p.vx*dt/16;p.y+=p.vy*dt/16;p.vx*=.98;p.vy*=.98;p.life-=dt/650}
-   shake=Math.max(0,shake-dt*.07);flash=Math.max(0,flash-dt/400);
+   shake=Math.max(0,shake-dt*.07);flash=Math.max(0,flash-dt/400);corePulse=Math.max(0,corePulse-dt/700);
   }
   draw();
  }
@@ -188,7 +224,7 @@ function tick(t){
 }
 $('start').onclick=start;
 $('pause').onclick=()=>{if(!playing||over)return;paused=!paused;$('status').textContent=paused?'Paused':'Complete square rings around the core'};
-$('rotate').onclick=rotate;$('drop').onclick=hardDrop;
+$('rotate').onclick=rotate;$('drop').onclick=hardDrop;$('detonate').onclick=()=>detonate(false);
 function fullscreen(){const el=$('app');if(document.fullscreenElement===el)document.exitFullscreen();else if(el.requestFullscreen)el.requestFullscreen().catch(()=>$('status').textContent='Fullscreen unavailable')}
 $('fullscreen').onclick=fullscreen;
 document.addEventListener('fullscreenchange',()=>$('fullscreen').textContent=document.fullscreenElement?'⛶ Exit Fullscreen':'⛶ Fullscreen');
@@ -197,7 +233,7 @@ document.addEventListener('keydown',e=>{
  const key=e.key.toLowerCase();
  if(key==='f'&&!e.repeat){e.preventDefault();fullscreen();return}
  if(!playing)return;
- if(['arrowup','arrowdown','arrowleft','arrowright',' ','z','x','p'].includes(key))e.preventDefault();
+ if(['arrowup','arrowdown','arrowleft','arrowright',' ','z','x','p','c'].includes(key))e.preventDefault();
  if(key==='arrowup')directional(0,-1);
  if(key==='arrowdown')directional(0,1);
  if(key==='arrowleft')directional(-1,0);
@@ -206,6 +242,7 @@ document.addEventListener('keydown',e=>{
  if(key==='z')rotate(false);
  if(key==='x')rotate(true);
  if(key==='p'&&!e.repeat)$('pause').click();
+ if(key==='c'&&!e.repeat)detonate(false);
 });
 grid=Array.from({length:N},()=>Array(N).fill(null));draw();requestAnimationFrame(tick);
 })();
