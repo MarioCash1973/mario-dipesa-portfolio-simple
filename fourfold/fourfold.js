@@ -1,17 +1,17 @@
 (()=>{'use strict';
-const N=22,S=30,C=10,LOCK=1500,MAX_RESETS=8,MAX_LIVES=5;
+const N=28,S=30,C=12,LOCK=1500,MAX_RESETS=8,MAX_LIVES=5;
 const shapes=[[[0,0],[1,0],[2,0],[3,0]],[[0,0],[1,0],[0,1],[1,1]],[[0,0],[1,0],[2,0],[1,1]],[[0,0],[0,1],[1,1],[2,1]],[[2,0],[0,1],[1,1],[2,1]],[[1,0],[2,0],[0,1],[1,1]],[[0,0],[1,0],[1,1],[2,1]]];
 const colors=['#36c5f0','#f6c65b','#a78bfa','#f78c55','#6fa8ff','#62d9a0','#f472b6'];
 // Fixed palette for the ten concentric rings, from the core outward.
-const ringColors=['#ff6b6b','#ffad5a','#ffe066','#9fe870','#41d9ae','#45c9f5','#718cff','#b38aff','#f37dd0','#d6e6f5'];
-const ringAt=(x,y)=>Math.max(Math.abs(x-C),Math.abs(x-(C+1)),Math.abs(y-C),Math.abs(y-(C+1)));
+const ringColors=['#ff6b6b','#ffad5a','#ffe066','#9fe870','#41d9ae','#45c9f5','#718cff','#b38aff','#f37dd0','#d6e6f5','#ef7b63','#8dd3cb'];
+const ringAt=(x,y)=>Math.max(C-x,x-(C+3),C-y,y-(C+3),0);
 
 const $=id=>document.getElementById(id),ctx=$('board').getContext('2d');
 let grid,active=null,dir=0,lastDir=-1,score=0,rings=0,lives=3,playing=false,paused=false,over=false,acc=0,prev=0,interval=650;
 let grounded=false,lockElapsed=0,resets=0,particles=[],shake=0,flash=0;
 let charges=0,chargeElapsed=0,chargeDuration=60000,detonations=0,corePulse=0;
 const vec=()=>[[0,1],[-1,0],[0,-1],[1,0]][dir];
-const core=(x,y)=>x>=C&&x<C+2&&y>=C&&y<C+2;
+const core=(x,y)=>x>=C&&x<C+4&&y>=C&&y<C+4;
 const inside=(x,y)=>x>=0&&x<N&&y>=0&&y<N;
 function valid(p){return p.cells.every(([dx,dy])=>{const x=p.x+dx,y=p.y+dy;return inside(x,y)&&!core(x,y)&&!grid[y][x]})}
 function rotated(c){const m=Math.max(...c.map(p=>p[1]));return c.map(([x,y])=>[m-y,x])}
@@ -74,7 +74,7 @@ function rotate(clockwise=true){
   if(valid(p)){const was=grounded;active=p;refreshContact(was,true);return}
  }
 }
-function ringCells(r){const a=C-r,b=C+1+r,out=[];for(let y=a;y<=b;y++)for(let x=a;x<=b;x++)if(x===a||x===b||y===a||y===b)out.push([x,y]);return out}
+function ringCells(r){const a=C-r,b=C+3+r,out=[];for(let y=a;y<=b;y++)for(let x=a;x<=b;x++)if(x===a||x===b||y===a||y===b)out.push([x,y]);return out}
 function clearRings(){
  let count=0;
  for(let r=1;r<=C;r++){const cells=ringCells(r);if(cells.every(([x,y])=>grid[y][x])){cells.forEach(([x,y])=>grid[y][x]=null);count++}}
@@ -152,9 +152,9 @@ function block(x,y,c){
  ctx.strokeStyle='rgba(255,255,255,.30)';ctx.strokeRect(px+2,py+2,S-4,S-4);
 }
 function draw(){
- ctx.save();ctx.clearRect(0,0,660,660);
+ ctx.save();ctx.clearRect(0,0,N*S,N*S);
  if(shake>0)ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);
- ctx.fillStyle='#0b1020';ctx.fillRect(-15,-15,690,690);
+ ctx.fillStyle='#0b1020';ctx.fillRect(-15,-15,N*S+30,N*S+30);
  for(let y=0;y<N;y++)for(let x=0;x<N;x++){
   const px=x*S,py=y*S;
   ctx.strokeStyle='rgba(140,165,220,.10)';ctx.strokeRect(px+.5,py+.5,S-1,S-1);
@@ -162,7 +162,7 @@ function draw(){
   if(grid&&grid[y][x])block(x,y,grid[y][x]);
  }
  for(let r=1;r<=C;r++){
-  const a=(C-r)*S,b=(C+2+r)*S;
+  const a=(C-r)*S,b=(C+4+r)*S;
   ctx.strokeStyle=ringColors[r-1];
   ctx.globalAlpha=.36;ctx.lineWidth=2;ctx.strokeRect(a+1,a+1,b-a-2,b-a-2);ctx.globalAlpha=1;
  }
@@ -171,28 +171,28 @@ function draw(){
   block(active.x+dx,active.y+dy,active.color);ctx.globalAlpha=1;
  }
  // Four nested red squares fill from the center outward as charge builds.
- const mid=(C+1)*S;
+ const mid=(C+2)*S;
  for(let i=3;i>=0;i--){
-  const size=12+i*12;
+  const size=24+i*24;
   ctx.fillStyle=i<charges?'rgba(255,55,67,'+(.8+corePulse*.2)+')':'rgba(115,35,48,.20)';
   ctx.fillRect(mid-size/2,mid-size/2,size,size);
   ctx.strokeStyle=i<charges?'#ffd1d1':'rgba(220,110,120,.30)';ctx.lineWidth=1.5;
   ctx.strokeRect(mid-size/2+.5,mid-size/2+.5,size-1,size-1);
  }
- if(charges===4){ctx.strokeStyle='rgba(255,75,75,'+(.5+.5*Math.sin(performance.now()*.013))+')';ctx.lineWidth=4;ctx.strokeRect(C*S+1,C*S+1,S*2-2,S*2-2)}
+ if(charges===4){ctx.strokeStyle='rgba(255,75,75,'+(.5+.5*Math.sin(performance.now()*.013))+')';ctx.lineWidth=4;ctx.strokeRect(C*S+1,C*S+1,S*4-2,S*4-2)}
  if(grounded&&playing&&!paused){
   const pct=Math.max(0,1-lockElapsed/LOCK);
   ctx.strokeStyle=pct<.3?'#fb7185':'#6ee7f9';ctx.lineWidth=4;
-  ctx.beginPath();ctx.arc(330,330,36,-Math.PI/2,-Math.PI/2+Math.PI*2*pct);ctx.stroke();
+  ctx.beginPath();ctx.arc((C+2)*S,(C+2)*S,58,-Math.PI/2,-Math.PI/2+Math.PI*2*pct);ctx.stroke();
  }
  for(const p of particles){ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.size,p.size)}
  ctx.globalAlpha=1;
- if(flash>0){ctx.fillStyle='rgba(255,85,110,'+flash+')';ctx.fillRect(0,0,660,660)}
+ if(flash>0){ctx.fillStyle='rgba(255,85,110,'+flash+')';ctx.fillRect(0,0,N*S,N*S)}
  ctx.restore();
  if(!playing||paused){
-  ctx.fillStyle='rgba(5,10,24,.56)';ctx.fillRect(0,0,660,660);
+  ctx.fillStyle='rgba(5,10,24,.56)';ctx.fillRect(0,0,N*S,N*S);
   ctx.fillStyle='#fff';ctx.textAlign='center';ctx.font='bold 28px sans-serif';
-  ctx.fillText(over?'GAME OVER':paused?'PAUSED':'FOURFOLD',330,320);
+  ctx.fillText(over?'GAME OVER':paused?'PAUSED':'FOURFOLD',(C+2)*S,(C+2)*S-10);
  }
  update();
 }
