@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const N=22,S=30,C=10,LOCK=1500,MAX_RESETS=8;
+const N=22,S=30,C=10,LOCK=1500,MAX_RESETS=8,MAX_LIVES=5;
 const shapes=[[[0,0],[1,0],[2,0],[3,0]],[[0,0],[1,0],[0,1],[1,1]],[[0,0],[1,0],[2,0],[1,1]],[[0,0],[0,1],[1,1],[2,1]],[[2,0],[0,1],[1,1],[2,1]],[[1,0],[2,0],[0,1],[1,1]],[[0,0],[1,0],[1,1],[2,1]]];
 const colors=['#36c5f0','#f6c65b','#a78bfa','#f78c55','#6fa8ff','#62d9a0','#f472b6'];
 const $=id=>document.getElementById(id),ctx=$('board').getContext('2d');
@@ -20,7 +20,7 @@ function refreshContact(was,manual){
 }
 function update(){
  $('score').textContent=score;$('rings').textContent=rings;
- $('lives').textContent='♥ '.repeat(lives)+'♡ '.repeat(3-lives);
+ $('lives').textContent='♥ '.repeat(lives)+'♡ '.repeat(MAX_LIVES-lives);
  $('timer').textContent=grounded&&playing?(Math.max(0,LOCK-lockElapsed)/1000).toFixed(1)+'s':'—';
 }
 function spawn(){
@@ -33,7 +33,7 @@ function spawn(){
  if(dir===0)y=0;if(dir===2)y=N-h;if(dir===3)x=0;if(dir===1)x=N-w;
  active={x,y,cells,color:colors[type]};grounded=false;lockElapsed=0;resets=0;acc=0;
  $('side').textContent=['TOP','RIGHT','BOTTOM','LEFT'][dir];
- if(!valid(active)){over=true;playing=false;$('status').textContent='GAME OVER · Entry blocked'}
+ if(!valid(active))entryCollision();
  else refreshContact(false,false);
  update();
 }
@@ -70,7 +70,7 @@ function ringCells(r){const a=C-r,b=C+1+r,out=[];for(let y=a;y<=b;y++)for(let x=
 function clearRings(){
  let count=0;
  for(let r=1;r<=C;r++){const cells=ringCells(r);if(cells.every(([x,y])=>grid[y][x])){cells.forEach(([x,y])=>grid[y][x]=null);count++}}
- if(count){rings+=count;score+=count*100*(count+1);interval=Math.max(170,650-rings*12)}
+ if(count){const gained=Math.min(count,MAX_LIVES-lives);rings+=count;score+=count*100*(count+1);lives+=gained;interval=Math.max(170,650-rings*12);$('status').textContent='RING CLEARED! +'+gained+' '+(gained===1?'life':'lives')+' (max 5)'}
 }
 function lock(){
  if(!active||!playing)return;
@@ -86,9 +86,30 @@ function burst(){
  }
  shake=10;flash=.3;
 }
+function entryCollision(){
+ // Destroy the arriving tetromino and every settled cell it overlaps.
+ // This is one collision event, costing exactly one life.
+ const incoming=active;
+ const hit=[];
+ for(const [dx,dy] of incoming.cells){
+  const x=incoming.x+dx,y=incoming.y+dy;
+  if(inside(x,y)&&grid[y][x]){hit.push({x,y,color:grid[y][x]});grid[y][x]=null}
+ }
+ burst();
+ for(const cell of hit){
+  for(let i=0;i<12;i++){
+   const a=Math.random()*Math.PI*2,s=1.5+Math.random()*5;
+   particles.push({x:(cell.x+.5)*S,y:(cell.y+.5)*S,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:1,color:cell.color,size:1.5+Math.random()*3});
+  }
+ }
+ lives--;active=null;grounded=false;
+ if(lives<=0){playing=false;over=true;$('status').textContent='GAME OVER · Entry collision'}
+ else{$('status').textContent='ENTRY COLLISION! One life lost';spawn()}
+ update();
+}
 function breach(){
  burst();lives--;active=null;grounded=false;
- if(lives<=0){playing=false;over=true;$('status').textContent='GAME OVER · All three lives lost'}
+ if(lives<=0){playing=false;over=true;$('status').textContent='GAME OVER · No lives remaining'}
  else{$('status').textContent='BREACH! One life lost';spawn()}
  update();
 }
