@@ -10,6 +10,7 @@ const $=id=>document.getElementById(id),ctx=$('board').getContext('2d');
 let grid,active=null,dir=0,lastDir=-1,score=0,rings=0,lives=3,playing=false,paused=false,over=false,acc=0,prev=0,interval=650;
 let grounded=false,lockElapsed=0,resets=0,particles=[],shake=0,flash=0;
 let charges=0,chargeElapsed=0,chargeDuration=60000,detonations=0,corePulse=0;
+let specialStreak=0,level=1,levelRings=0,levelTime=0;
 const SPECIAL_CHANCE=0.10;
 const vec=()=>[[0,1],[-1,0],[0,-1],[1,0]][dir];
 const core=(x,y)=>x>=C&&x<C+4&&y>=C&&y<C+4;
@@ -25,6 +26,7 @@ function refreshContact(was,manual){
  else grounded=true;
 }
 function update(){
+ $('level').textContent=level;$('levelProgress').textContent=levelRings+'/5 · '+Math.ceil((300000-levelTime)/1000)+'s';
  $('score').textContent=score;$('rings').textContent=rings;
  $('lives').textContent='♥ '.repeat(lives)+'♡ '.repeat(MAX_LIVES-lives);
  $('timer').textContent=grounded&&playing?(Math.max(0,LOCK-lockElapsed)/1000).toFixed(1)+'s':'—';
@@ -40,7 +42,9 @@ function spawn(){
  const w=Math.max(...cells.map(p=>p[0]))+1,h=Math.max(...cells.map(p=>p[1]))+1;
  let x=Math.floor((N-w)/2),y=Math.floor((N-h)/2);
  if(dir===0)y=0;if(dir===2)y=N-h;if(dir===3)x=0;if(dir===1)x=N-w;
- active={x,y,cells,color:colors[type],special:Math.random()<SPECIAL_CHANCE?Math.floor(Math.random()*cells.length):-1};grounded=false;lockElapsed=0;resets=0;acc=0;
+ const special=Math.random()<Math.max(0,SPECIAL_CHANCE-specialStreak*.02)?Math.floor(Math.random()*cells.length):-1;
+ specialStreak=special>=0?specialStreak+1:0;
+ active={x,y,cells,color:colors[type],special};grounded=false;lockElapsed=0;resets=0;acc=0;
  $('side').textContent=['TOP','RIGHT','BOTTOM','LEFT'][dir];
  if(!valid(active))entryCollision();
  else refreshContact(false,false);
@@ -76,27 +80,38 @@ function rotate(clockwise=true){
  }
 }
 function ringCells(r){const a=C-r,b=C+3+r,out=[];for(let y=a;y<=b;y++)for(let x=a;x<=b;x++)if(x===a||x===b||y===a||y===b)out.push([x,y]);return out}
+function advanceDifficulty(count=0){
+ levelRings+=count;
+ if(levelRings>=5||levelTime>=300000){
+  level++;levelRings=0;levelTime=0;interval=Math.max(65,interval*.85);
+  $('status').textContent='LEVEL '+level+' · Speed increased!';
+ }
+}
+function destroyRing(r){
+ let destroyed=0;
+ for(const [x,y] of ringCells(r)){
+  const color=grid[y][x];if(!color)continue;
+  grid[y][x]=null;destroyed++;
+  for(let i=0;i<7;i++){const a=Math.random()*Math.PI*2,v=1+Math.random()*4;particles.push({x:(x+.5)*S,y:(y+.5)*S,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:1,color,size:2+Math.random()*2})}
+ }
+ if(destroyed){shake=Math.max(shake,8);flash=Math.max(flash,.15)}
+ return destroyed;
+}
 function clearRings(){
  let count=0;
- for(let r=1;r<=C;r++){const cells=ringCells(r);if(cells.every(([x,y])=>grid[y][x])){cells.forEach(([x,y])=>grid[y][x]=null);count++}}
- if(count){const gained=Math.min(count,MAX_LIVES-lives);rings+=count;score+=count*100*(count+1);lives+=gained;interval=Math.max(170,650-rings*12);$('status').textContent='RING CLEARED! +'+gained+' '+(gained===1?'life':'lives')+' (max 5)'}
+ for(let r=1;r<=C;r++){const cells=ringCells(r);if(cells.every(([x,y])=>grid[y][x])){destroyRing(r);count++}}
+ if(count){const gained=Math.min(count,MAX_LIVES-lives);rings+=count;score+=count*100*(count+1);lives+=gained;$('status').textContent='RING CLEARED! +'+gained+' '+(gained===1?'life':'lives')+' (max 5)';advanceDifficulty(count)}
 }
 function detonate(overload=false){
  if(!playing||paused||charges===0)return;
  const used=charges;
- let destroyed=0;
- for(let r=1;r<=used;r++)for(const [x,y] of ringCells(r)){
-  if(!grid[y][x])continue;
-  const color=grid[y][x];grid[y][x]=null;destroyed++;
-  for(let i=0;i<5;i++){
-   const a=Math.random()*Math.PI*2,v=1+Math.random()*4;
-   particles.push({x:(x+.5)*S,y:(y+.5)*S,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:1,color,size:2+Math.random()*2});
-  }
- }
+ let destroyed=0,affected=0;
+ for(let r=1;r<=used;r++){const n=destroyRing(r);destroyed+=n;if(n)affected++}
  charges=0;chargeElapsed=0;chargeDuration+=10000;detonations++;corePulse=1;shake=overload?16:9;flash=overload?.48:.23;
  // A detonation destroys blocks, not completed rings: no bonus lives.
  score+=destroyed*2;
  $('status').textContent=(overload?'CORE OVERLOAD! ':'CORE DETONATED! ')+used+' inner '+(used===1?'ring':'rings')+' cleared · '+Math.round(chargeDuration/1000)+'s per charge';
+ advanceDifficulty(affected);
  if(active)refreshContact(false,false);
  update();
 }
@@ -106,14 +121,10 @@ function lock(){
  score+=4;
  if(active.special>=0){
   const [dx,dy]=active.cells[active.special],r=ringAt(active.x+dx,active.y+dy);
-  let destroyed=0;
-  for(const [x,y] of ringCells(r)){
-   const color=grid[y][x];if(!color)continue;
-   grid[y][x]=null;destroyed++;
-   for(let i=0;i<7;i++){const a=Math.random()*Math.PI*2,v=1+Math.random()*4;particles.push({x:(x+.5)*S,y:(y+.5)*S,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:1,color,size:2+Math.random()*2})}
-  }
+  const destroyed=destroyRing(r);
   score+=destroyed*2;shake=8;flash=.15;
   $('status').textContent='RING BREAKER! Ring '+r+' destroyed';
+  if(destroyed)advanceDifficulty(1);
  }
  clearRings();spawn();update();
 }
@@ -212,13 +223,14 @@ function draw(){
 }
 function start(){
  grid=Array.from({length:N},()=>Array(N).fill(null));
- active=null;lastDir=-1;score=0;rings=0;lives=3;interval=650;acc=0;over=false;paused=false;playing=true;
+ active=null;lastDir=-1;score=0;rings=0;lives=3;interval=650;specialStreak=0;level=1;levelRings=0;levelTime=0;acc=0;over=false;paused=false;playing=true;
  particles=[];shake=0;flash=0;charges=0;chargeElapsed=0;chargeDuration=60000;detonations=0;corePulse=0;spawn();$('status').textContent='Complete square rings around the core';draw();
 }
 function tick(t){
  if(prev){
   const dt=Math.min(t-prev,100);
   if(playing&&!paused){
+   levelTime+=dt;advanceDifficulty();
    acc+=dt;
    if(acc>=interval){acc-=interval;step()}
    if(grounded&&playing){lockElapsed+=dt;if(lockElapsed>=LOCK)lock()}
