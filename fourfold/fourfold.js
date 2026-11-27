@@ -10,7 +10,7 @@ const $=id=>document.getElementById(id),ctx=$('board').getContext('2d');
 let grid,active=null,dir=0,lastDir=-1,score=0,rings=0,lives=3,playing=false,paused=false,over=false,acc=0,prev=0,interval=650;
 let grounded=false,lockElapsed=0,resets=0,particles=[],shake=0,flash=0;
 let charges=0,chargeElapsed=0,chargeDuration=60000,detonations=0,corePulse=0;
-let gravityCollapse=true;
+const SPECIAL_CHANCE=0.10;
 const vec=()=>[[0,1],[-1,0],[0,-1],[1,0]][dir];
 const core=(x,y)=>x>=C&&x<C+4&&y>=C&&y<C+4;
 const inside=(x,y)=>x>=0&&x<N&&y>=0&&y<N;
@@ -40,7 +40,7 @@ function spawn(){
  const w=Math.max(...cells.map(p=>p[0]))+1,h=Math.max(...cells.map(p=>p[1]))+1;
  let x=Math.floor((N-w)/2),y=Math.floor((N-h)/2);
  if(dir===0)y=0;if(dir===2)y=N-h;if(dir===3)x=0;if(dir===1)x=N-w;
- active={x,y,cells,color:colors[type]};grounded=false;lockElapsed=0;resets=0;acc=0;
+ active={x,y,cells,color:colors[type],special:Math.random()<SPECIAL_CHANCE?Math.floor(Math.random()*cells.length):-1};grounded=false;lockElapsed=0;resets=0;acc=0;
  $('side').textContent=['TOP','RIGHT','BOTTOM','LEFT'][dir];
  if(!valid(active))entryCollision();
  else refreshContact(false,false);
@@ -81,30 +81,6 @@ function clearRings(){
  for(let r=1;r<=C;r++){const cells=ringCells(r);if(cells.every(([x,y])=>grid[y][x])){cells.forEach(([x,y])=>grid[y][x]=null);count++}}
  if(count){const gained=Math.min(count,MAX_LIVES-lives);rings+=count;score+=count*100*(count+1);lives+=gained;interval=Math.max(170,650-rings*12);$('status').textContent='RING CLEARED! +'+gained+' '+(gained===1?'life':'lives')+' (max 5)'}
 }
-// Experimental ring compression. Preserve all surviving blocks by using
-// nearest angular slots, spilling excess blocks to the next outer ring.
-function collapseOuterRings(removed){
- const old=grid,next=Array.from({length:N},()=>Array(N).fill(null));
- const reserved=new Set(active?active.cells.map(([dx,dy])=>(active.x+dx)+','+(active.y+dy)):[]);
- const blocks=[];
- for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(old[y][x])blocks.push({x,y,ring:ringAt(x,y)});
- blocks.sort((a,b)=>a.ring-b.ring);
- const center=(N-1)/2;
- const angle=(x,y)=>Math.atan2(y-center,x-center);
- const delta=(a,b)=>Math.abs(Math.atan2(Math.sin(a-b),Math.cos(a-b)));
- for(const b of blocks){
-  const target=Math.max(1,b.ring-removed),bearing=angle(b.x,b.y);
-  let placed=false;
-  for(let r=target;r<=C;r++){
-   const slots=ringCells(r).filter(([x,y])=>!next[y][x]&&!reserved.has(x+','+y));
-   if(!slots.length)continue;
-   slots.sort((p,q)=>delta(angle(p[0],p[1]),bearing)-delta(angle(q[0],q[1]),bearing)||Math.hypot(p[0]-b.x,p[1]-b.y)-Math.hypot(q[0]-b.x,q[1]-b.y));
-   const [x,y]=slots[0];next[y][x]=ringColors[r-1];placed=true;break;
-  }
-  if(!placed)throw Error('No available slot for ring collapse');
- }
- grid=next;return blocks.length;
-}
 function detonate(overload=false){
  if(!playing||paused||charges===0)return;
  const used=charges;
@@ -117,18 +93,29 @@ function detonate(overload=false){
    particles.push({x:(x+.5)*S,y:(y+.5)*S,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:1,color,size:2+Math.random()*2});
   }
  }
- const pulled=gravityCollapse?collapseOuterRings(used):0;
  charges=0;chargeElapsed=0;chargeDuration+=10000;detonations++;corePulse=1;shake=overload?16:9;flash=overload?.48:.23;
  // A detonation destroys blocks, not completed rings: no bonus lives.
  score+=destroyed*2;
- $('status').textContent=(overload?'CORE OVERLOAD! ':'CORE DETONATED! ')+used+' inner '+(used===1?'ring':'rings')+' cleared · '+Math.round(chargeDuration/1000)+'s per charge'+(gravityCollapse?' · '+pulled+' outer blocks pulled inward':'');
+ $('status').textContent=(overload?'CORE OVERLOAD! ':'CORE DETONATED! ')+used+' inner '+(used===1?'ring':'rings')+' cleared · '+Math.round(chargeDuration/1000)+'s per charge';
  if(active)refreshContact(false,false);
  update();
 }
 function lock(){
  if(!active||!playing)return;
  for(const [dx,dy] of active.cells)grid[active.y+dy][active.x+dx]=ringColors[ringAt(active.x+dx,active.y+dy)-1];
- score+=4;clearRings();spawn();update();
+ score+=4;
+ if(active.special>=0){
+  const [dx,dy]=active.cells[active.special],r=ringAt(active.x+dx,active.y+dy);
+  let destroyed=0;
+  for(const [x,y] of ringCells(r)){
+   const color=grid[y][x];if(!color)continue;
+   grid[y][x]=null;destroyed++;
+   for(let i=0;i<7;i++){const a=Math.random()*Math.PI*2,v=1+Math.random()*4;particles.push({x:(x+.5)*S,y:(y+.5)*S,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:1,color,size:2+Math.random()*2})}
+  }
+  score+=destroyed*2;shake=8;flash=.15;
+  $('status').textContent='RING BREAKER! Ring '+r+' destroyed';
+ }
+ clearRings();spawn();update();
 }
 function burst(){
  if(!active)return;
@@ -195,6 +182,7 @@ function draw(){
  if(active)for(const [dx,dy] of active.cells){
   if(grounded&&playing&&!paused)ctx.globalAlpha=.72+.28*(.5+.5*Math.sin(performance.now()*.014));
   block(active.x+dx,active.y+dy,active.color);ctx.globalAlpha=1;
+  if(active.special>=0&&active.cells[active.special][0]===dx&&active.cells[active.special][1]===dy){const x=(active.x+dx+.5)*S,y=(active.y+dy+.5)*S;ctx.fillStyle='#111827';ctx.beginPath();ctx.arc(x,y,11,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 20px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('✦',x,y);ctx.textBaseline='alphabetic'}
  }
  // Four nested red squares fill from the center outward as charge builds.
  const mid=(C+2)*S;
@@ -251,8 +239,6 @@ function tick(t){
 $('start').onclick=start;
 $('pause').onclick=()=>{if(!playing||over)return;paused=!paused;$('status').textContent=paused?'Paused':'Complete square rings around the core'};
 $('rotate').onclick=rotate;$('drop').onclick=hardDrop;$('detonate').onclick=()=>detonate(false);
-$('collapseToggle').checked=gravityCollapse;
-$('collapseToggle').onchange=e=>{gravityCollapse=e.target.checked;$('status').textContent=gravityCollapse?'Experimental ring pull ON':'Classic detonation ON';};
 function fullscreen(){const el=$('app');if(document.fullscreenElement===el)document.exitFullscreen();else if(el.requestFullscreen)el.requestFullscreen().catch(()=>$('status').textContent='Fullscreen unavailable')}
 $('fullscreen').onclick=fullscreen;
 document.addEventListener('fullscreenchange',()=>$('fullscreen').textContent=document.fullscreenElement?'⛶ Exit Fullscreen':'⛶ Fullscreen');
@@ -261,7 +247,7 @@ document.addEventListener('keydown',e=>{
  const key=e.key.toLowerCase();
  if(key==='f'&&!e.repeat){e.preventDefault();fullscreen();return}
  if(!playing)return;
- if(['arrowup','arrowdown','arrowleft','arrowright',' ','z','x','p','c','v'].includes(key))e.preventDefault();
+ if(['arrowup','arrowdown','arrowleft','arrowright',' ','z','x','p','c'].includes(key))e.preventDefault();
  if(key==='arrowup')directional(0,-1);
  if(key==='arrowdown')directional(0,1);
  if(key==='arrowleft')directional(-1,0);
@@ -271,7 +257,6 @@ document.addEventListener('keydown',e=>{
  if(key==='x')rotate(true);
  if(key==='p'&&!e.repeat)$('pause').click();
  if(key==='c'&&!e.repeat)detonate(false);
- if(key==='v'&&!e.repeat){$('collapseToggle').checked=!$('collapseToggle').checked;$('collapseToggle').onchange({target:$('collapseToggle')})}
 });
 grid=Array.from({length:N},()=>Array(N).fill(null));draw();requestAnimationFrame(tick);
 })();
