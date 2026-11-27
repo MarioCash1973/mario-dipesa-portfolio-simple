@@ -12,7 +12,7 @@ const $=id=>document.getElementById(id),ctx=$('board').getContext('2d');
 let grid,active=null,dir=0,lastDir=-1,score=0,rings=0,lives=3,playing=false,paused=false,over=false,acc=0,prev=0,interval=650;
 let grounded=false,lockElapsed=0,resets=0,particles=[],shake=0,flash=0;
 let charges=0,chargeElapsed=0,chargeDuration=60000,detonations=0,corePulse=0;
-let specialStreak=0,level=1,levelRings=0,levelTime=0;
+let spawnedPieces=0,specialStreak=0,level=1,levelRings=0,levelTime=0;
 const SPECIAL_CHANCE=0.10;
 const vec=()=>[[0,1],[-1,0],[0,-1],[1,0]][dir];
 const core=(x,y)=>x>=C&&x<C+4&&y>=C&&y<C+4;
@@ -44,7 +44,8 @@ function spawn(){
  const w=Math.max(...cells.map(p=>p[0]))+1,h=Math.max(...cells.map(p=>p[1]))+1;
  let x=Math.floor((N-w)/2),y=Math.floor((N-h)/2);
  if(dir===0)y=0;if(dir===2)y=N-h;if(dir===3)x=0;if(dir===1)x=N-w;
- const special=Math.random()<Math.max(0,SPECIAL_CHANCE-specialStreak*.02)?Math.floor(Math.random()*cells.length):-1;
+ spawnedPieces++;
+ const special=spawnedPieces>=12&&Math.random()<Math.max(0,SPECIAL_CHANCE-specialStreak*.02)?Math.floor(Math.random()*cells.length):-1;
  specialStreak=special>=0?specialStreak+1:0;
  active={x,y,cells,color:colors[type],special};grounded=false;lockElapsed=0;resets=0;acc=0;
  $('side').textContent=['TOP','RIGHT','BOTTOM','LEFT'][dir];
@@ -235,7 +236,7 @@ function draw(){
 }
 function start(){
  grid=Array.from({length:N},()=>Array(N).fill(null));
- active=null;lastDir=-1;score=0;rings=0;lives=3;interval=650;specialStreak=0;level=1;levelRings=0;levelTime=0;acc=0;over=false;paused=false;playing=true;
+ active=null;lastDir=-1;score=0;rings=0;lives=3;interval=650;spawnedPieces=0;specialStreak=0;level=1;levelRings=0;levelTime=0;acc=0;over=false;paused=false;playing=true;
  particles=[];shake=0;flash=0;charges=0;chargeElapsed=0;chargeDuration=60000;detonations=0;corePulse=0;spawn();$('status').textContent='Complete square rings around the core';draw();
 }
 function tick(t){
