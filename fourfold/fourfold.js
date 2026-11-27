@@ -97,21 +97,31 @@ function destroyRing(r){
  if(destroyed){shake=Math.max(shake,8);flash=Math.max(flash,.15)}
  return destroyed;
 }
-function clearRings(){
- let count=0;
- for(let r=1;r<=C;r++){const cells=ringCells(r);if(cells.every(([x,y])=>grid[y][x])){destroyRing(r);count++}}
- if(count){const gained=Math.min(count,MAX_LIVES-lives);rings+=count;score+=count*100*(count+1);lives+=gained;$('status').textContent='RING CLEARED! +'+gained+' '+(gained===1?'life':'lives')+' (max 5)';advanceDifficulty(count)}
+function isComplete(r){return ringCells(r).every(([x,y])=>grid[y][x])}
+function rewardCompleted(count){
+ if(!count)return;
+ const gained=Math.min(count,MAX_LIVES-lives);
+ rings+=count;score+=count*100*(count+1);lives+=gained;
+ $('status').textContent+=' · '+count+' completed · +'+gained+' lives';
+ advanceDifficulty(count);
+}
+function clearRings(extra=0){
+ let count=extra;
+ for(let r=1;r<=C;r++)if(isComplete(r)){destroyRing(r);count++}
+ if(count){$('status').textContent='RING CLEARED!';rewardCompleted(count)}
 }
 function detonate(overload=false){
  if(!playing||paused||charges===0)return;
  const used=charges;
- let destroyed=0,affected=0;
- for(let r=1;r<=used;r++){const n=destroyRing(r);destroyed+=n;if(n)affected++}
+ let destroyed=0,affected=0,completed=0,incomplete=0;
+ for(let r=1;r<=used;r++){
+  const full=isComplete(r),n=destroyRing(r);
+  if(n){affected++;if(full)completed++;else{incomplete++;destroyed+=n}}
+ }
  charges=0;chargeElapsed=0;chargeDuration+=10000;detonations++;corePulse=1;shake=overload?16:9;flash=overload?.48:.23;
- // A detonation destroys blocks, not completed rings: no bonus lives.
- score+=destroyed*2;
- $('status').textContent=(overload?'CORE OVERLOAD! ':'CORE DETONATED! ')+used+' inner '+(used===1?'ring':'rings')+' cleared · '+Math.round(chargeDuration/1000)+'s per charge';
- advanceDifficulty(affected);
+ score+=destroyed*2+10*incomplete*(incomplete-1);
+ $('status').textContent=(overload?'CORE OVERLOAD! ':'CORE DETONATED! ')+affected+' rings destroyed · '+Math.round(chargeDuration/1000)+'s per charge';
+ rewardCompleted(completed);
  if(active)refreshContact(false,false);
  update();
 }
@@ -119,14 +129,14 @@ function lock(){
  if(!active||!playing)return;
  for(const [dx,dy] of active.cells)grid[active.y+dy][active.x+dx]=ringColors[ringAt(active.x+dx,active.y+dy)-1];
  score+=4;
+ let completed=0;
  if(active.special>=0){
   const [dx,dy]=active.cells[active.special],r=ringAt(active.x+dx,active.y+dy);
-  const destroyed=destroyRing(r);
-  score+=destroyed*2;shake=8;flash=.15;
+  const full=isComplete(r),destroyed=destroyRing(r);
+  if(full)completed++;else score+=destroyed*2;
   $('status').textContent='RING BREAKER! Ring '+r+' destroyed';
-  if(destroyed)advanceDifficulty(1);
  }
- clearRings();spawn();update();
+ clearRings(completed);spawn();update();
 }
 function burst(){
  if(!active)return;
